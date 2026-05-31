@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec.bak
+
+# Generated case output
+case_*/
+*.case/
+
+# Generated reports / screenshots / one-off artifacts
+report.html
+report.html.sha256
+shots/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Evidence — NEVER commit
+net.one97.paytm/
+extraction/
+*.tar
+*.tar.gz
+*.zip
+*.ab
+*.img
+
+# Local env
+.env
+.env.local
+
+# Per-extraction ground-truth values used by some regression tests.
+# Holds real PII from the examiner's evidence — must NEVER be committed.
+tests/_truth.json

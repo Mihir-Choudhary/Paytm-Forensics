@@ -1,0 +1,431 @@
+{
+  "errors": [
+    {
+      "code": 1103,
+      "errorMessage": "You have entered incorrect passcode. Kindly retry.",
+      "reason": "The passcode entered by you is incorrect.",
+      "status": "SUCCESS",
+      "httpStatus": 200
+    },
+    {
+      "code": 1107,
+      "errorMessage": "You have entered incorrect password. Kindly retry.",
+      "reason": "The password entered by you is incorrect.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1902,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Internal Server Error",
+      "status": "FAILURE",
+      "httpStatus": 500
+    },
+    {
+      "code": 1906,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid Client",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1900,
+      "errorMessage": "Your passcode already exists. Kindly reset your passcode in case you don't remember your current passcode.",
+      "reason": "Passcode Mapping Already exists",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1911,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid Request",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1936,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Challenge service unavailable",
+      "status": "FAILURE",
+      "httpStatus": 500
+    },
+    {
+      "code": 1937,
+      "errorMessage": "We are unable to send OTP at the moment. Please try again later.",
+      "reason": "Something went wrong in sending an OTP to you. Kindly retry.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1939,
+      "errorMessage": "Your OTP verification has failed. Please try again.",
+      "reason": "OTP verification failed",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1941,
+      "errorMessage": "Your maximum retry limit has reached. Please try again later.",
+      "reason": "You have exceeded the maximum number of attempts. Kindly retry later.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1947,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid workflow Token",
+      "status": "FAILURE",
+      "httpStatus": 401
+    },
+    {
+      "code": 1948,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Otp Service Unavailable",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1954,
+      "errorMessage": "User is blocked due to maximum OTP send/verify limit reached. Please retry later.",
+      "reason": "System is unable to send/verify OTP as the user is blocked. Please retry again later.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1955,
+      "errorMessage": "You have breached the maximum limit to send OTP. Please retry again later.",
+      "reason": "You have breached the maximum limit to send OTP. Please retry again later.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1958,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Unauthorized request",
+      "status": "FAILURE",
+      "httpStatus": 401
+    },
+    {
+      "code": 1959,
+      "errorMessage": "This OTP is expired. Please generate a new OTP.",
+      "reason": "Entered OTP has expired",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1960,
+      "errorMessage": "You have entered incorrect OTP. Kindly retry.",
+      "reason": "Invalid OTP entered",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1961,
+      "errorMessage": "Maximum OTP verification limit is reached. Please try again later.",
+      "reason": "OTP Verification Limit Reached",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1986,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Redirect url is incorrect correspond to client",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1987,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "User-ID / Email / Phone Number not provided in the request.",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1988,
+      "errorMessage": "This Panel doesn't have access to Admin Panel's Api",
+      "reason": "This Panel hasn't have access to Admin Panel's Api",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1989,
+      "errorMessage": "Your password does not exist, please proceed to set your password.",
+      "reason": "password does not exist",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1990,
+      "errorMessage": "Your password already exists, please proceed to reset your password in case you don't remember your current password.",
+      "reason": "password already exists",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1991,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Client-Public-Key-Version header is missing",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1992,
+      "errorMessage": "New password cannot be same as old password",
+      "reason": "New password cannot be same as old password",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1993,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid Secret",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1994,
+      "errorMessage": "Password did not match with the one entered above.",
+      "reason": "Password did not match with the one entered above",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1995,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Secret type is invalid",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1996,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "AuthCode Belongs to different state or state not provided.",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1997,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Authorization Code must not be empty",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1998,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid workflow Name",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1999,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "User details not found",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4027,
+      "errorMessage": "Your passcode does not exist, please proceed to set your passcode.",
+      "reason": "passcode does not exist",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4028,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "AuthCode Belongs to other customer or customer not provided.",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 4029,
+      "errorMessage": "Password requirements didn't match",
+      "reason": "Password requirements didn't match",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 4030,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "AuthCode Belongs to other client or client not provided.",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 4033,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Authorization Code has expired",
+      "status": "FAILURE",
+      "httpStatus": 401
+    },
+    {
+      "code": 4036,
+      "errorMessage": "The phone number you have entered is either invalid or not registered with us. Please enter your registered phone number.",
+      "reason": "Invalid Phone Number",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4037,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Refresh_token grant type not supported yet.",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 4038,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid state",
+      "status": "FAILURE",
+      "httpStatus": 500
+    },
+    {
+      "code": 4039,
+      "errorMessage": "OTP Resend Limit Reached. Please try again later.",
+      "reason": "OTP Resend Limit Reached. Please try agin later.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4040,
+      "errorMessage": "Account blocked due to maximum OTP resend limit reached. Please retry later.",
+      "reason": "Account blocked due to maximum OTP resend limit reached. Please retry later.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4041,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "User profile mismatch found at backend.",
+      "status": "FAILURE",
+      "httpStatus": 500
+    },
+    {
+      "code": 4042,
+      "errorMessage": "You have entered incorrect password. Kindly retry.",
+      "reason": "Entered password is incorrect. Kindly retry.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4043,
+      "errorMessage": "You have entered incorrect passcode. Kindly retry.",
+      "reason": "Entered passcode is incorrect. Kindly retry.",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4046,
+      "errorMessage": "Your credentials are disabled or inactive. Please contact your admin to receive new credentials or reach out to customer support if you are a retail customer",
+      "reason": "Your credentials are disabled or inactive. Please contact your admin to receive new credentials or reach out to customer support if you are a retail customer",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4048,
+      "errorMessage": "This user is not registered with us.",
+      "reason": "User is not registered",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4049,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Error occured while fetching kyc details",
+      "status": "FAILURE",
+      "httpStatus": 500
+    },
+    {
+      "code": 4050,
+      "errorMessage": "Account is blocked. Please reach out to 24X7 Customer Care at 0120-4456-456 for more information.",
+      "reason": "Account is blocked. Please reach out to 24X7 Customer Care at 0120-4456-456 for more information.",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 4051,
+      "errorMessage": "Your sim binding has failed. Please retry logging out from your Paytmbank app account and login again.",
+      "reason": "Sim Binding Check Failed",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1907,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid JWT Token",
+      "status": "FAILURE",
+      "httpStatus": 401
+    },
+    {
+      "code": 1904,
+      "errorMessage": "Passcode entered is incorrect. Please re-enter the correct passcode.",
+      "reason": "Old Passcode Mismatch",
+      "status": "FAILURE",
+      "httpStatus": 400
+    },
+    {
+      "code": 1916,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Oauth Service Unavailable",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 1919,
+      "errorMessage": "Your device verification has failed. Please retry logging out from your Paytmbank app account and login again.",
+      "reason": "device verification has failed",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4052,
+      "errorMessage": "Your maximum retry limit has reached. Please try again later or contact customer support.",
+      "reason": "maximum retry limit has reached",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4099,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Device mapping service unavailable",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4100,
+      "errorMessage": "Your password does not exist, please proceed to set your password.",
+      "reason": "Your password does not exist",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4103,
+      "errorMessage": "This device is blacklisted. Please try again from another device.",
+      "reason": "Device is blacklisted.",
+      "status": "FAILURE",
+      "httpStatus": 401
+    },
+    {
+      "code": 4068,
+      "errorMessage": "Your username already exists, please proceed to login.",
+      "reason": "Username already existed",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4012,
+      "errorMessage": "Your request got failed due to technical reason. Please try again later.",
+      "reason": "Invalid client configurations",
+      "status": "FAILURE",
+      "httpStatus": 200
+    },
+    {
+      "code": 4066,
+      "errorMessage": "We couldn't find a username associated with this mobile number. Please create a username if you don't have one.",
+      "reason": "This username does not exist",
+      "status": "FAILURE",
+      "httpStatus": 200
+    }
+  ]
+}
