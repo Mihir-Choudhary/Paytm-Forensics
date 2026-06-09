@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QListWidget,
     QListWidgetItem, QTableView, QLineEdit, QComboBox, QLabel, QSplitter,
     QTextEdit, QPushButton, QFileDialog, QFrame, QMessageBox, QStatusBar,
-    QStackedWidget, QHeaderView, QGridLayout, QMenu,
+    QStackedWidget, QHeaderView, QGridLayout, QMenu, QCheckBox, QInputDialog,
 )
 from PySide6.QtCore import Qt, QSettings
 from PySide6.QtGui import QFont, QKeySequence, QShortcut
@@ -39,6 +39,12 @@ class MainWindow(QMainWindow):
         self.case_dir = case_dir
         self.ds = DataSource(os.path.join(case_dir, "case.db"))
         self.meta = self._load_meta()
+        # analyst flags/notes live in a writable sidecar; case.db stays read-only.
+        # Annotation events continue the case's hash-chained audit log.
+        from ..core.annotations import AnnotationStore
+        from ..core.audit import AuditLog
+        self.annotations = AnnotationStore(
+            case_dir, audit=AuditLog(os.path.join(case_dir, "audit.log")))
         self.setWindowTitle("PaytmForensics")
         self.resize(1440, 880)
         self._model: RecordTableModel | None = None
@@ -117,9 +123,15 @@ class MainWindow(QMainWindow):
         return bar
 
     def _build_menu(self):
+        c = self.menuBar().addMenu("&Case")
+        c.addAction("Verify evidence integrity…", self._verify_evidence)
+        c.addAction("View audit log…", self._show_audit_log)
         m = self.menuBar().addMenu("&Export")
         m.addAction("Current view → JSON", lambda: self._export("json"))
         m.addAction("Current view → CSV", lambda: self._export("csv"))
+        m.addSeparator()
+        m.addAction("Flagged records → JSON", lambda: self._export_flagged("json"))
+        m.addAction("Flagged records → CSV", lambda: self._export_flagged("csv"))
         m.addSeparator()
         m.addAction("Locations → KML", lambda: self._geo("kml"))
         m.addAction("Locations → GeoJSON", lambda: self._geo("geojson"))
@@ -148,6 +160,7 @@ class MainWindow(QMainWindow):
         # bound the rows sampled by resizeColumnsToContents (large domains freeze otherwise)
         self.table.horizontalHeader().setResizeContentsPrecision(200)
         self.table.clicked.connect(self._on_row_click)
+        self.table.doubleClicked.connect(self._on_row_double_click)
         self.table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.table.customContextMenuRequested.connect(self._table_menu)
         split.addWidget(self.table)
@@ -185,7 +198,10 @@ class MainWindow(QMainWindow):
         g.addWidget(QLabel("Date"), 1, 0); g.addWidget(self.f_from, 1, 1); g.addWidget(self.f_to, 1, 2)
         g.addWidget(QLabel("Amount"), 1, 3); g.addWidget(self.f_amin, 1, 4); g.addWidget(self.f_amax, 1, 5)
         g.addWidget(QLabel("Dir"), 1, 6); g.addWidget(self.f_dir, 1, 7)
-        g.addWidget(self.f_src, 2, 0, 1, 8)
+        g.addWidget(self.f_src, 2, 0, 1, 7)
+        self.f_flagged = QCheckBox("★ flagged only")
+        self.f_flagged.toggled.connect(self._apply)
+        g.addWidget(self.f_flagged, 2, 7)
         # right-click "filter by this value" chips (cleared by Clear / domain switch)
         self.f_chips = QLabel(); self.f_chips.setObjectName("kvKey")
         self.f_chips.setStyleSheet(f"color:{C['accent_cyan']};")
@@ -265,7 +281,7 @@ class MainWindow(QMainWindow):
         self._refresh_chips()
         # each domain starts unsorted (insertion order = case-DB order)
         self.table.horizontalHeader().setSortIndicator(-1, Qt.AscendingOrder)
-        self._model = RecordTableModel(self.ds, dom)
+        self._model = RecordTableModel(self.ds, dom, annotations=self.annotations)
         self.table.setModel(self._model)
         # selection model is recreated by setModel — reconnect so keyboard
         # navigation (not just mouse clicks) updates the detail pane
@@ -276,7 +292,8 @@ class MainWindow(QMainWindow):
         else:
             self.stack.setCurrentIndex(1)
         self.detail.clear()
-        self.statusBar().showMessage(f"{dom}: {self._model.rowCount()} rows")
+        hint = "  —  double-click a row to open the entity pivot" if dom == "entity" else ""
+        self.statusBar().showMessage(f"{dom}: {self._model.rowCount()} rows{hint}")
 
     def _show_timeline(self):
         from .timelineview import TimelineView
@@ -314,7 +331,8 @@ class MainWindow(QMainWindow):
         self.stack.insertWidget(0, new_dash)
         self.stack.removeWidget(self.dashboard); self.dashboard.deleteLater()
         self.dashboard = new_dash
-        for attr in ("_chat_page", "_map_page", "_timeline_page", "_search_page"):
+        for attr in ("_chat_page", "_map_page", "_timeline_page", "_search_page",
+                     "_entity_page"):
             pg = getattr(self, attr, None)
             if pg is not None:
                 self.stack.removeWidget(pg); pg.deleteLater(); setattr(self, attr, None)
@@ -374,7 +392,8 @@ class MainWindow(QMainWindow):
         if errors:
             self.statusBar().showMessage("Filter NOT applied — " + "; ".join(errors))
             return
-        self._model.set_filter(spec)
+        predicate = self.annotations.is_flagged if self.f_flagged.isChecked() else None
+        self._model.set_filter(spec, predicate=predicate)
         self.table.resizeColumnsToContents()
         self.statusBar().showMessage(f"{self._model.rowCount()} rows after filter")
 
@@ -382,6 +401,9 @@ class MainWindow(QMainWindow):
         for w in (self.f_text, self.f_from, self.f_to, self.f_amin, self.f_amax, self.f_src):
             w.clear()
         self.f_origin.setCurrentIndex(0); self.f_dir.setCurrentIndex(0)
+        self.f_flagged.blockSignals(True)
+        self.f_flagged.setChecked(False)
+        self.f_flagged.blockSignals(False)
         self._field_filters = {}
         self._refresh_chips()
         if self._model:
@@ -418,7 +440,34 @@ class MainWindow(QMainWindow):
         if cell:
             menu.addAction(f'Search everywhere for “{short}”',
                            lambda: self._search_value(cell))
+        menu.addSeparator()
+        flagged, note = self.annotations.get(rec)
+        menu.addAction("Remove flag" if flagged else "★  Flag record (add to exhibit set)",
+                       lambda: self._toggle_flag(idx.row(), rec, not flagged))
+        menu.addAction("Edit analyst note…" if note else "Add analyst note…",
+                       lambda: self._edit_note(idx.row(), rec))
         menu.exec(self.table.viewport().mapToGlobal(pos))
+
+    def _toggle_flag(self, row: int, rec: dict, flagged: bool):
+        self.annotations.set_flag(rec, flagged)
+        if self._model:
+            self._model.refresh_row(row)
+        self._show_detail(rec)
+        n = self.annotations.count_flagged()
+        self.statusBar().showMessage(
+            f"{'Flagged' if flagged else 'Unflagged'} — {n} record(s) in the exhibit set")
+
+    def _edit_note(self, row: int, rec: dict):
+        _flagged, note = self.annotations.get(rec)
+        text, ok = QInputDialog.getMultiLineText(
+            self, "Analyst note", "Note for this record (stored in annotations.db, "
+            "never in the evidence):", note)
+        if not ok:
+            return
+        self.annotations.set_note(rec, text.strip())
+        if self._model:
+            self._model.refresh_row(row)
+        self._show_detail(rec)
 
     def _filter_field_equals(self, col: str, value):
         self._field_filters[col] = value
@@ -452,7 +501,13 @@ class MainWindow(QMainWindow):
 
     def _show_detail(self, rec: dict):
         p = rec.get("provenance", {})
-        head = (f"SOURCE:  {p.get('source_file')}\n"
+        flagged, note = self.annotations.get(rec)
+        ann = ""
+        if flagged or note:
+            ann = "★ FLAGGED" if flagged else "NOTE"
+            ann += f"   {note}\n" if note else "\n"
+        head = (ann +
+                f"SOURCE:  {p.get('source_file')}\n"
                 f"TABLE :  {p.get('source_table')}\n"
                 f"ROWID :  {p.get('rowid')}    OFFSET: {p.get('byte_offset')}\n"
                 f"ORIGIN:  {p.get('origin')}    CONFIDENCE: {p.get('confidence')}\n"
@@ -471,6 +526,32 @@ class MainWindow(QMainWindow):
             self._show_detail(self._model.record_at(cur.row()))
         else:
             self.detail.clear()
+
+    def _on_row_double_click(self, index):
+        """Double-clicking an entity row opens its drill-down pivot."""
+        if self._model and self._model.domain == "entity" and index.isValid():
+            self._open_entity(self._model.record_at(index.row()))
+
+    def _close_entity(self):
+        # the nav is usually already on "entity", so selecting it alone would
+        # not fire currentItemChanged — re-run the nav handler explicitly
+        self._select_domain("entity")
+        self._on_nav(self.nav.currentItem(), None)
+
+    def _open_entity(self, entity: dict):
+        from .entityview import EntityView
+        old = getattr(self, "_entity_page", None)
+        if old is not None:
+            self.stack.removeWidget(old); old.deleteLater()
+        page = EntityView(self.ds, entity)
+        page.back.connect(self._close_entity)
+        self._entity_page = page
+        self.stack.addWidget(page)
+        self.stack.setCurrentWidget(page)
+        name = (entity.get("names") or ["(unnamed)"])[0]
+        self.title.setText(f"Entity: {name}")
+        self.statusBar().showMessage(
+            "Entity pivot — double-click rows in Entities to switch; ← returns")
 
     def _export(self, fmt: str):
         if not self._model:
@@ -565,6 +646,62 @@ class MainWindow(QMainWindow):
                 self.table.setCurrentIndex(idx)
                 self.table.scrollTo(idx)
                 break
+
+    def _export_flagged(self, fmt: str):
+        from ..core.annotations import record_key
+        keys = self.annotations.flagged_keys()
+        if not keys:
+            QMessageBox.information(
+                self, "Flagged records",
+                "No flagged records yet.\nRight-click a row → “Flag record” to build "
+                "an exhibit set, then export it here.")
+            return
+        rows = []
+        for dom in self.ds.domains():
+            for r in self.ds.load(dom):
+                if record_key(r) in keys:
+                    rows.append(self.annotations.annotate_export(r))
+        path, _ = QFileDialog.getSaveFileName(
+            self, f"Export flagged records ({fmt.upper()})",
+            f"flagged.{fmt}", f"{fmt.upper()} (*.{fmt})")
+        if not path:
+            return
+        from ..report import exporters
+        exporters.export(rows, path, fmt)
+        QMessageBox.information(self, "Flagged records",
+                                f"Wrote {len(rows)} flagged record(s) to:\n{path}")
+
+    # ------------------------------------------------------------ case menu #
+    def _verify_evidence(self):
+        from ..core import integrity
+        from ..core.audit import AuditLog
+        from .casedialogs import show_verify_result
+        manifest = integrity.load_manifest(os.path.join(self.case_dir, "manifest.json"))
+        if not manifest:
+            QMessageBox.warning(self, "Verify", "No manifest.json in this case directory.")
+            return
+        root = self.meta.get("extraction_root")
+        if not root or not os.path.isdir(root):
+            root = QFileDialog.getExistingDirectory(
+                self, "Locate the original extraction folder (as ingested)")
+            if not root:
+                return
+        self.statusBar().showMessage("Re-hashing extraction… this can take a while")
+        QApplication.processEvents()
+        report = integrity.verify_against(manifest, root)
+        AuditLog(os.path.join(self.case_dir, "audit.log")).log(
+            "gui_verify", {"root": root, "ok": report["ok"],
+                           "changed": len(report["changed"]),
+                           "missing": len(report["missing"]),
+                           "added": len(report["added"])})
+        self.statusBar().showMessage(
+            "Evidence verified — byte-identical" if report["ok"]
+            else "Evidence verification FAILED")
+        show_verify_result(self, report, root)
+
+    def _show_audit_log(self):
+        from .casedialogs import AuditLogDialog
+        AuditLogDialog(self.case_dir, self).exec()
 
     def _geo(self, fmt: str):
         ext = "kml" if fmt == "kml" else "geojson"

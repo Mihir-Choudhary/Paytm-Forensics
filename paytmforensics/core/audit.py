@@ -40,3 +40,39 @@ class AuditLog:
         with open(self.path, "a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
         self._prev_hash = entry_hash
+
+
+def read_entries(path: str) -> list[dict]:
+    """All entries of an audit log, in file order (skips blank lines)."""
+    out = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                out.append(json.loads(line))
+    return out
+
+
+def verify_chain(path: str) -> dict:
+    """Re-walk an audit log and verify its hash chain.
+
+    Returns {"ok": bool, "entries": n, "first_bad": 1-based entry number or None}.
+    Recomputes each entry's hash exactly as log() produced it, so any edited,
+    inserted, deleted or reordered line breaks the chain from that point.
+    """
+    prev = "0" * 64
+    n = 0
+    try:
+        entries = read_entries(path)
+    except (OSError, json.JSONDecodeError):
+        return {"ok": False, "entries": 0, "first_bad": 1}
+    for i, e in enumerate(entries, 1):
+        claimed = e.get("entry_hash")
+        body = {k: v for k, v in e.items() if k != "entry_hash"}
+        payload = json.dumps(body, sort_keys=True, ensure_ascii=False)
+        if e.get("prev_hash") != prev or \
+                hashlib.sha256((prev + payload).encode("utf-8")).hexdigest() != claimed:
+            return {"ok": False, "entries": len(entries), "first_bad": i}
+        prev = claimed
+        n += 1
+    return {"ok": True, "entries": n, "first_bad": None}
