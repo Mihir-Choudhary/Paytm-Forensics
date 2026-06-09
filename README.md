@@ -69,9 +69,19 @@ identifiers, so an analyst can answer questions like *"who did the subject pay
   txn-id). Carved rows are deduped against live ones.
 - **Offline IFSC → bank/branch resolution** and bundled error-code mapping.
 - **Master timeline** that merges every timestamped record across domains.
-- **GUI** (PySide6) — dashboard, per-domain tables with filters, global search,
-  WhatsApp-style chat view, Leaflet map of GPS fixes (offline fallback when no
-  network), visual timeline ribbon, light / dark theme.
+- **GUI** (PySide6) — dashboard, per-domain tables with type-aware sorting and
+  validated filters, global search with click-to-pivot, **entity drill-down**
+  (one counterparty's transactions + chats on one page), WhatsApp-style chat
+  view, Leaflet map of GPS fixes (offline fallback), filterable visual
+  timeline, right-click filter/copy/search context menu, keyboard shortcuts,
+  light / dark theme.
+- **Analyst annotations** — flag records into an exhibit set and attach notes;
+  stored in a writable sidecar (`annotations.db`) so case artifacts stay
+  byte-stable; flagged-set export; every annotation continues the
+  hash-chained audit log (note length only, never note text).
+- **Chain-of-custody in the GUI** — re-verify the extraction against the
+  ingest manifest from the Case menu, and browse the audit log with its hash
+  chain re-validated entry by entry.
 - **Reports** — self-contained HTML with inline SVG charts and per-record
   provenance; PDF via WeasyPrint when available.
 - **Exports** — deterministic JSON / CSV per domain, plus KML / GeoJSON for
@@ -139,6 +149,8 @@ case_dir/
 ├── manifest.json      # SHA-256 + MD5 + size of every input file
 ├── audit.log          # hash-chained log of every tool action
 ├── case_meta.json     # case ID / examiner / evidence number / notes / timestamps
+├── annotations.db     # (created by the GUI) analyst flags + notes — sidecar,
+│                      #  never touches case.db or the parsed records
 ├── report.html        # (with --report) self-contained HTML report
 ├── report.html.sha256 # SHA-256 of the report
 └── exports/           # (optional) JSON / CSV / KML / GeoJSON
