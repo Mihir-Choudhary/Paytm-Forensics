@@ -5,6 +5,7 @@ from PySide6.QtCore import QAbstractTableModel, Qt, QModelIndex
 
 from .datasource import DataSource
 from .filters import FilterSpec
+from .sorting import sort_records
 
 
 class RecordTableModel(QAbstractTableModel):
@@ -15,16 +16,32 @@ class RecordTableModel(QAbstractTableModel):
         self._cols = ds.columns(domain)
         self._all = ds.load(domain)
         self._rows = list(self._all)
+        self._sort_state: tuple[int, Qt.SortOrder] | None = None
 
     # --- filtering --------------------------------------------------------- #
     def set_filter(self, spec: FilterSpec | None):
         self.beginResetModel()
         from .filters import apply_filter
         self._rows = apply_filter(self._all, spec) if spec else list(self._all)
+        if self._sort_state:
+            self._apply_sort(*self._sort_state)
         self.endResetModel()
 
     def record_at(self, row: int) -> dict:
         return self._rows[row]
+
+    # --- sorting (triggered by header clicks via QTableView) ---------------- #
+    def sort(self, column: int, order: Qt.SortOrder = Qt.AscendingOrder):
+        if not 0 <= column < len(self._cols):
+            return
+        self.beginResetModel()
+        self._sort_state = (column, order)
+        self._apply_sort(column, order)
+        self.endResetModel()
+
+    def _apply_sort(self, column: int, order: Qt.SortOrder):
+        self._rows = sort_records(self._rows, self._cols[column],
+                                  descending=(order == Qt.DescendingOrder))
 
     # --- Qt API ------------------------------------------------------------ #
     def rowCount(self, parent=QModelIndex()):

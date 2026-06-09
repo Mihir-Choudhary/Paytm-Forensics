@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 
 from PySide6.QtWidgets import (
@@ -137,6 +138,9 @@ class MainWindow(QMainWindow):
         self.table.setAlternatingRowColors(True)
         self.table.verticalHeader().setVisible(False)
         self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setSortingEnabled(True)
+        # bound the rows sampled by resizeColumnsToContents (large domains freeze otherwise)
+        self.table.horizontalHeader().setResizeContentsPrecision(200)
         self.table.clicked.connect(self._on_row_click)
         split.addWidget(self.table)
 
@@ -162,7 +166,7 @@ class MainWindow(QMainWindow):
         self.f_origin = QComboBox(); self.f_origin.addItems(["any", "live", "carved"])
         self.f_amin = QLineEdit(); self.f_amin.setPlaceholderText("min ₹"); self.f_amin.setMaximumWidth(90)
         self.f_amax = QLineEdit(); self.f_amax.setPlaceholderText("max ₹"); self.f_amax.setMaximumWidth(90)
-        self.f_dir = QComboBox(); self.f_dir.addItems(["", "credit", "debit"])
+        self.f_dir = QComboBox(); self.f_dir.addItems(["any", "credit", "debit"])
         self.f_src = QLineEdit(); self.f_src.setPlaceholderText("source file…")
         apply_btn = QPushButton("Apply"); apply_btn.setObjectName("primary"); apply_btn.clicked.connect(self._apply)
         clear_btn = QPushButton("Clear"); clear_btn.clicked.connect(self._clear)
@@ -228,8 +232,13 @@ class MainWindow(QMainWindow):
             return
         # build the table model regardless (export uses it); show chat view for messages
         self.title.setText(DOMAIN_LABELS.get(dom, dom))
+        # each domain starts unsorted (insertion order = case-DB order)
+        self.table.horizontalHeader().setSortIndicator(-1, Qt.AscendingOrder)
         self._model = RecordTableModel(self.ds, dom)
         self.table.setModel(self._model)
+        # selection model is recreated by setModel — reconnect so keyboard
+        # navigation (not just mouse clicks) updates the detail pane
+        self.table.selectionModel().currentRowChanged.connect(self._on_current_row)
         self.table.resizeColumnsToContents()
         if dom == "message":
             self._show_chat()
@@ -271,10 +280,11 @@ class MainWindow(QMainWindow):
         self.stack.insertWidget(0, new_dash)
         self.stack.removeWidget(self.dashboard); self.dashboard.deleteLater()
         self.dashboard = new_dash
-        for attr in ("_chat_page", "_map_page", "_timeline_page"):
+        for attr in ("_chat_page", "_map_page", "_timeline_page", "_search_page"):
             pg = getattr(self, attr, None)
             if pg is not None:
                 self.stack.removeWidget(pg); pg.deleteLater(); setattr(self, attr, None)
+        self._search_results = []
         self._on_nav(self.nav.currentItem(), None)   # refresh current view
 
     def _show_map(self):
@@ -288,27 +298,55 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("Location map")
 
     # ------------------------------------------------------------- behaviour #
-    def _current_spec(self) -> FilterSpec:
-        def fnum(w):
-            try:
-                return float(w.text()) if w.text().strip() else None
-            except ValueError:
+    _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2})?)?$")
+
+    def _build_spec(self) -> tuple[FilterSpec | None, list[str]]:
+        """Validate the filter inputs. Returns (spec, errors); spec is None on error
+        so a typo can never silently filter to the wrong row set."""
+        errors: list[str] = []
+
+        def fdate(w, label):
+            s = w.text().strip()
+            if not s:
                 return None
-        return FilterSpec(
+            if not self._DATE_RE.match(s):
+                errors.append(f"{label} must be YYYY-MM-DD (optionally HH:MM[:SS])")
+                return None
+            return s.replace(" ", "T")
+
+        def fnum(w, label):
+            s = w.text().strip().replace(",", "").replace("₹", "")
+            if not s:
+                return None
+            try:
+                return float(s)
+            except ValueError:
+                errors.append(f"{label} is not a number")
+                return None
+
+        spec = FilterSpec(
             text=self.f_text.text().strip(),
-            date_from=self.f_from.text().strip() or None,
-            date_to=self.f_to.text().strip() or None,
+            date_from=fdate(self.f_from, "From date"),
+            date_to=fdate(self.f_to, "To date"),
             origin=self.f_origin.currentText(),
-            amount_min=fnum(self.f_amin), amount_max=fnum(self.f_amax),
-            direction=self.f_dir.currentText() or None,
+            amount_min=fnum(self.f_amin, "Min amount"),
+            amount_max=fnum(self.f_amax, "Max amount"),
+            direction=(self.f_dir.currentText()
+                       if self.f_dir.currentText() in ("credit", "debit") else None),
             source_contains=self.f_src.text().strip(),
         )
+        return (None, errors) if errors else (spec, [])
 
     def _apply(self):
-        if self._model:
-            self._model.set_filter(self._current_spec())
-            self.table.resizeColumnsToContents()
-            self.statusBar().showMessage(f"{self._model.rowCount()} rows after filter")
+        if not self._model:
+            return
+        spec, errors = self._build_spec()
+        if errors:
+            self.statusBar().showMessage("Filter NOT applied — " + "; ".join(errors))
+            return
+        self._model.set_filter(spec)
+        self.table.resizeColumnsToContents()
+        self.statusBar().showMessage(f"{self._model.rowCount()} rows after filter")
 
     def _clear(self):
         for w in (self.f_text, self.f_from, self.f_to, self.f_amin, self.f_amax, self.f_src):
@@ -316,11 +354,9 @@ class MainWindow(QMainWindow):
         self.f_origin.setCurrentIndex(0); self.f_dir.setCurrentIndex(0)
         if self._model:
             self._model.set_filter(None)
+            self.statusBar().showMessage(f"{self._model.rowCount()} rows (no filter)")
 
-    def _on_row_click(self, index):
-        if not self._model:
-            return
-        rec = self._model.record_at(index.row())
+    def _show_detail(self, rec: dict):
         p = rec.get("provenance", {})
         head = (f"SOURCE:  {p.get('source_file')}\n"
                 f"TABLE :  {p.get('source_table')}\n"
@@ -330,6 +366,17 @@ class MainWindow(QMainWindow):
         body = json.dumps({k: v for k, v in rec.items() if k != "provenance"},
                           indent=2, ensure_ascii=False)
         self.detail.setPlainText(head + body)
+
+    def _on_row_click(self, index):
+        if self._model and index.isValid():
+            self._show_detail(self._model.record_at(index.row()))
+
+    def _on_current_row(self, cur, _prev):
+        """Keyboard navigation (and any selection move) keeps the detail pane honest."""
+        if self._model and cur.isValid():
+            self._show_detail(self._model.record_at(cur.row()))
+        else:
+            self.detail.clear()
 
     def _export(self, fmt: str):
         if not self._model:
@@ -344,22 +391,49 @@ class MainWindow(QMainWindow):
         exporters.export(rows, path, fmt)
         QMessageBox.information(self, "Export", f"Wrote {len(rows)} records to:\n{path}")
 
+    def _build_search_page(self):
+        from PySide6.QtWidgets import QTableWidget
+        page = QWidget()
+        v = QVBoxLayout(page); v.setContentsMargins(20, 16, 20, 16); v.setSpacing(12)
+        split = QSplitter(Qt.Horizontal)
+        self._search_table = QTableWidget()
+        self._search_table.setColumnCount(4)
+        self._search_table.setHorizontalHeaderLabels(["Domain", "Summary", "Source", "Origin"])
+        self._search_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self._search_table.setSelectionMode(QTableWidget.SingleSelection)
+        self._search_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self._search_table.horizontalHeader().setStretchLastSection(True)
+        self._search_table.currentCellChanged.connect(self._search_row_changed)
+        self._search_table.cellDoubleClicked.connect(self._open_search_hit)
+        split.addWidget(self._search_table)
+
+        wrap = QFrame(); wrap.setObjectName("card")
+        dl = QVBoxLayout(wrap); dl.setContentsMargins(14, 12, 14, 12)
+        dt = QLabel("Record detail & provenance"); dt.setObjectName("cardTitle")
+        dl.addWidget(dt)
+        self._search_detail = QTextEdit()
+        self._search_detail.setObjectName("detail"); self._search_detail.setReadOnly(True)
+        self._search_detail.setPlaceholderText(
+            "Select a result to view it here.  Double-click opens it in its domain view.")
+        dl.addWidget(self._search_detail)
+        split.addWidget(wrap)
+        split.setSizes([920, 430])
+        v.addWidget(split, 1)
+        self._search_page = page
+        self.stack.addWidget(page)
+
     def _global_search(self):
-        from PySide6.QtWidgets import QTableWidget, QTableWidgetItem
+        from PySide6.QtWidgets import QTableWidgetItem
         text = self.search_box.text().strip()
         if not text:
             return
         results = self.ds.global_search(text)
         if self._search_page is None:
-            self._search_page = QTableWidget()
-            self._search_page.setColumnCount(4)
-            self._search_page.setHorizontalHeaderLabels(["Domain", "Summary", "Source", "Origin"])
-            self._search_page.setSelectionBehavior(QTableWidget.SelectRows)
-            self._search_page.horizontalHeader().setStretchLastSection(True)
-            self._search_page.cellClicked.connect(self._search_row_clicked)
-            self.stack.addWidget(self._search_page)
-        t = self._search_page
+            self._build_search_page()
+        t = self._search_table
+        t.clearSelection()
         self._search_results = results
+        self._search_detail.clear()
         t.setRowCount(len(results))
         for i, (dom, summary, rec) in enumerate(results):
             p = rec.get("provenance", {})
@@ -367,17 +441,36 @@ class MainWindow(QMainWindow):
                                      p.get("source_file", ""), p.get("origin", "")]):
                 t.setItem(i, j, QTableWidgetItem(str(val)))
         t.resizeColumnsToContents()
-        self.stack.setCurrentWidget(t)
+        self.stack.setCurrentWidget(self._search_page)
         self.title.setText(f"Search: “{text}”  ({len(results)} hits)")
         self.statusBar().showMessage(f"{len(results)} matches for '{text}'")
 
-    def _search_row_clicked(self, row, _col):
+    def _search_row_changed(self, row, _col=0, _prow=0, _pcol=0):
+        if not (0 <= row < len(getattr(self, "_search_results", []))):
+            self._search_detail.clear()
+            return
         dom, _summary, rec = self._search_results[row]
         p = rec.get("provenance", {})
         head = (f"DOMAIN: {dom}\nSOURCE: {p.get('source_file')} :: {p.get('source_table')}\n"
                 f"ORIGIN: {p.get('origin')}\n" + "─" * 46 + "\n")
-        self.detail.setPlainText(head + json.dumps(
+        self._search_detail.setPlainText(head + json.dumps(
             {k: v for k, v in rec.items() if k != "provenance"}, indent=2, ensure_ascii=False))
+
+    def _open_search_hit(self, row, _col=0):
+        """Double-click a search hit: jump to its domain view and select the record."""
+        if not (0 <= row < len(getattr(self, "_search_results", []))):
+            return
+        dom, _summary, rec = self._search_results[row]
+        self._select_domain(dom)
+        # domains routed to chat/timeline/map views: navigation alone is the best we can do
+        if self.stack.currentIndex() != 1 or not self._model:
+            return
+        for i in range(self._model.rowCount()):
+            if self._model.record_at(i) == rec:
+                idx = self._model.index(i, 0)
+                self.table.setCurrentIndex(idx)
+                self.table.scrollTo(idx)
+                break
 
     def _geo(self, fmt: str):
         ext = "kml" if fmt == "kml" else "geojson"

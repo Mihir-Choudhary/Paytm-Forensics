@@ -6,8 +6,9 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from pathlib import Path
 
-from .filters import FilterSpec, apply_filter
+from .filters import FilterSpec, apply_filter, _all_strings, searchable_values
 
 # preferred display columns per domain (others still available in the detail panel)
 DISPLAY_COLUMNS = {
@@ -81,7 +82,14 @@ def _fmt(v):
 class DataSource:
     def __init__(self, case_db_path: str):
         self.path = case_db_path
-        self.con = sqlite3.connect(case_db_path)
+        # read-only: the GUI must never be able to mutate a case artifact after
+        # its hashes were taken (also stops sqlite creating an empty DB on a bad path)
+        uri = Path(case_db_path).resolve().as_uri() + "?mode=ro"
+        try:
+            self.con = sqlite3.connect(uri, uri=True)
+        except sqlite3.OperationalError as e:
+            raise sqlite3.OperationalError(
+                f"cannot open case DB read-only: {case_db_path} ({e})") from e
 
     def domains(self) -> dict:
         cur = self.con.execute(
@@ -117,16 +125,13 @@ class DataSource:
     def global_search(self, text: str, limit: int = 1000) -> list[tuple]:
         """Search every record's VALUES (not keys/provenance) across all domains, matching
         the per-table filter behaviour. Returns [(domain, summary, record)]."""
-        from .filters import _all_strings
         text = (text or "").strip().lower()
         if not text:
             return []
         out = []
         for dom in self.domains():
             for r in self.load(dom):
-                searchable = {k: v for k, v in r.items()
-                              if k not in ("provenance", "raw", "domain")}
-                if any(text in s.lower() for s in _all_strings(searchable)):
+                if any(text in s.lower() for s in _all_strings(searchable_values(r))):
                     out.append((dom, summarize(r, dom), r))
                     if len(out) >= limit:
                         return out

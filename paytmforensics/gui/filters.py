@@ -10,11 +10,19 @@ def record_utc(rec: dict) -> Optional[str]:
     for key in ("utc_iso",):
         if rec.get(key):
             return rec[key]
-    for key in ("timestamp", "last_enqueue"):
+    # cookie/webcache use "created", crash uses "start_time"
+    for key in ("timestamp", "last_enqueue", "created", "start_time"):
         ts = rec.get(key)
         if isinstance(ts, dict) and ts.get("utc_iso"):
             return ts["utc_iso"]
     return None
+
+
+def searchable_values(rec: dict) -> dict:
+    """The part of a record text search may look at: field values only, never the
+    provenance/raw bookkeeping (else file paths and ingest hashes pollute matches).
+    Shared by the per-table filter and global search so both behave identically."""
+    return {k: v for k, v in rec.items() if k not in ("provenance", "raw", "domain")}
 
 
 def _all_strings(obj: Any):
@@ -32,9 +40,9 @@ def _all_strings(obj: Any):
 
 @dataclass
 class FilterSpec:
-    text: str = ""                       # case-insensitive substring across all fields
+    text: str = ""                       # case-insensitive substring across field values
     date_from: Optional[str] = None      # ISO; inclusive
-    date_to: Optional[str] = None        # ISO; inclusive
+    date_to: Optional[str] = None        # ISO; inclusive (a bare date covers that whole day)
     origin: str = "any"                  # any | live | carved
     amount_min: Optional[float] = None
     amount_max: Optional[float] = None
@@ -47,10 +55,10 @@ class FilterSpec:
         if self.origin != "any":
             if rec.get("provenance", {}).get("origin") != self.origin:
                 return False
-        # text (across all string values)
+        # text (across field values only — same subset as global search)
         if self.text:
             t = self.text.lower()
-            if not any(t in s.lower() for s in _all_strings(rec)):
+            if not any(t in s.lower() for s in _all_strings(searchable_values(rec))):
                 return False
         # date range
         if self.date_from or self.date_to:
@@ -59,7 +67,9 @@ class FilterSpec:
                 return False
             if self.date_from and utc < self.date_from:
                 return False
-            if self.date_to and utc > self.date_to:
+            # prefix compare so date_to is inclusive at its own granularity:
+            # date_to "2026-05-12" keeps "2026-05-12T23:59:59…" but drops the 13th
+            if self.date_to and utc[:len(self.date_to)] > self.date_to:
                 return False
         # amount
         amt = rec.get("amount")

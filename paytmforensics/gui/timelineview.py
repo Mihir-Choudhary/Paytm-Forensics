@@ -2,7 +2,7 @@
 timeline table."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QFrame, QLabel, QTableView, QSplitter
 from PySide6.QtCore import Qt, QPointF, QRectF
@@ -11,6 +11,10 @@ from PySide6.QtGui import QPainter, QColor, QPen, QFont
 from .datasource import DataSource
 from .models import RecordTableModel
 from .theme import C, DOMAIN_STYLE
+
+# stable lane per domain — str hash() is randomized per process and would
+# re-shuffle the ribbon between runs of the same case
+_LANE = {dom: i % 5 for i, dom in enumerate(DOMAIN_STYLE)}
 
 
 def _events(ds: DataSource):
@@ -52,17 +56,18 @@ class TimelineRibbon(QWidget):
             p.setPen(QColor(C["text_muted"])); p.drawText(self.rect(), Qt.AlignCenter, "No timeline events"); return
         axis_y = h - 34
         p.setPen(QPen(QColor(C["border"]), 1)); p.drawLine(m, axis_y, w - m, axis_y)
-        # year/month ticks
+        # year/month ticks (UTC — event times are UTC, so labels must be too)
         p.setFont(QFont("Segoe UI", 7)); p.setPen(QColor(C["text_dim"]))
         for f in range(6):
             x = m + f / 5 * (w - 2 * m)
             ts = self.t0 + f / 5 * (self.t1 - self.t0)
-            p.drawText(QPointF(x - 22, axis_y + 16), datetime.fromtimestamp(ts).strftime("%b %Y"))
-        # event dots (stagger vertically by hash to reduce overlap)
+            p.drawText(QPointF(x - 22, axis_y + 16),
+                       datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%b %Y"))
+        # event dots (stagger vertically by domain lane to reduce overlap)
         for i, (dt, dom, _s) in enumerate(self.events):
             x = self._x(dt.timestamp(), m, w)
             col = QColor(DOMAIN_STYLE.get(dom, ("•", C["accent"]))[1])
-            yy = 20 + (hash(dom) % 5) * 16
+            yy = 20 + _LANE.get(dom, 0) * 16
             r = 7 if i == self._hover else 4
             p.setPen(QPen(QColor("white") if i == self._hover else col.darker(150), 1))
             p.setBrush(col); p.drawEllipse(QPointF(x, yy), r, r)
@@ -92,7 +97,7 @@ class TimelineView(QWidget):
         events = _events(ds)
         ribbon_card = QFrame(); ribbon_card.setObjectName("card")
         rl = QVBoxLayout(ribbon_card); rl.setContentsMargins(12, 10, 12, 10)
-        rl.addWidget(QLabel(f"Activity timeline — {len(events)} events"))
+        rl.addWidget(QLabel(f"Activity timeline — {len(events)} events  ·  times in UTC"))
         self.ribbon = TimelineRibbon(events); rl.addWidget(self.ribbon)
         v.addWidget(ribbon_card)
         self.table = QTableView()
