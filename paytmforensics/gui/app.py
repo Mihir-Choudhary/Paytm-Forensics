@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import sys
 
 from PySide6.QtWidgets import (
@@ -23,7 +22,7 @@ except Exception:
     _HAS_WEBENGINE = False
 
 from .datasource import DataSource, DOMAIN_LABELS
-from .filters import FilterSpec
+from .filters import FilterSpec, parse_user_date
 from .models import RecordTableModel
 from .theme import qss, C, DOMAIN_STYLE, NAV_GROUPS, set_theme, current_theme, apply_palette
 from .dashboard import Dashboard
@@ -194,6 +193,16 @@ class MainWindow(QMainWindow):
                 if dom == "map":
                     if not (counts.get("location") or counts.get("diagnostic")):
                         continue
+                elif dom == "carved" and dom not in counts:
+                    # "carving recovered nothing" is a finding, not an absence —
+                    # show it (disabled) instead of hiding the domain
+                    glyph, _color = DOMAIN_STYLE["carved"]
+                    it = QListWidgetItem(f"{glyph}   {DOMAIN_LABELS['carved']}   (0)")
+                    it.setFlags(Qt.NoItemFlags)
+                    it.setToolTip("Carving ran and recovered 0 records (source may be "
+                                  "vacuumed / secure-deleted / checkpointed)")
+                    self.nav.addItem(it)
+                    continue
                 elif dom != "dashboard" and dom not in counts:
                     continue
                 glyph, color = DOMAIN_STYLE.get(dom, ("•", C["accent"]))
@@ -230,6 +239,11 @@ class MainWindow(QMainWindow):
         if dom == "map":
             self._show_map()
             return
+        if dom == "timeline":
+            self._show_timeline()
+            self.detail.clear()
+            self.statusBar().showMessage(f"timeline: {self._model.rowCount()} rows")
+            return
         # build the table model regardless (export uses it); show chat view for messages
         self.title.setText(DOMAIN_LABELS.get(dom, dom))
         # each domain starts unsorted (insertion order = case-DB order)
@@ -242,8 +256,6 @@ class MainWindow(QMainWindow):
         self.table.resizeColumnsToContents()
         if dom == "message":
             self._show_chat()
-        elif dom == "timeline":
-            self._show_timeline()
         else:
             self.stack.setCurrentIndex(1)
         self.detail.clear()
@@ -254,6 +266,10 @@ class MainWindow(QMainWindow):
         if getattr(self, "_timeline_page", None) is None:
             self._timeline_page = TimelineView(self.ds)
             self.stack.addWidget(self._timeline_page)
+        # the timeline page owns its (filterable) model — point exports at it so
+        # "export current view" writes exactly what the analyst is looking at
+        self._model = self._timeline_page.model
+        self.title.setText(DOMAIN_LABELS.get("timeline", "Timeline"))
         self.stack.setCurrentWidget(self._timeline_page)
 
     def _show_chat(self):
@@ -298,21 +314,16 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("Location map")
 
     # ------------------------------------------------------------- behaviour #
-    _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2})?)?$")
-
     def _build_spec(self) -> tuple[FilterSpec | None, list[str]]:
         """Validate the filter inputs. Returns (spec, errors); spec is None on error
         so a typo can never silently filter to the wrong row set."""
         errors: list[str] = []
 
         def fdate(w, label):
-            s = w.text().strip()
-            if not s:
-                return None
-            if not self._DATE_RE.match(s):
+            ok, norm = parse_user_date(w.text())
+            if not ok:
                 errors.append(f"{label} must be YYYY-MM-DD (optionally HH:MM[:SS])")
-                return None
-            return s.replace(" ", "T")
+            return norm
 
         def fnum(w, label):
             s = w.text().strip().replace(",", "").replace("₹", "")

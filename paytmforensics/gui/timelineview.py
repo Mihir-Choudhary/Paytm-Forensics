@@ -1,14 +1,18 @@
 """Visual timeline: a horizontal activity ribbon (events coloured by domain) above the
-timeline table."""
+timeline table, with date-range / text filtering that drives both."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QFrame, QLabel, QTableView, QSplitter
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QFrame, QLabel, QTableView, QLineEdit,
+    QPushButton,
+)
 from PySide6.QtCore import Qt, QPointF, QRectF
 from PySide6.QtGui import QPainter, QColor, QPen, QFont
 
 from .datasource import DataSource
+from .filters import FilterSpec, parse_user_date
 from .models import RecordTableModel
 from .theme import C, DOMAIN_STYLE
 
@@ -17,9 +21,10 @@ from .theme import C, DOMAIN_STYLE
 _LANE = {dom: i % 5 for i, dom in enumerate(DOMAIN_STYLE)}
 
 
-def _events(ds: DataSource):
+def _to_events(records) -> list[tuple]:
+    """[(datetime, ref_domain, summary)] sorted chronologically."""
     out = []
-    for r in ds.load("timeline"):
+    for r in records:
         utc = r.get("utc_iso")
         if not utc:
             continue
@@ -35,15 +40,19 @@ def _events(ds: DataSource):
 class TimelineRibbon(QWidget):
     def __init__(self, events):
         super().__init__()
-        self.events = events
         self.setMinimumHeight(150)
         self.setMouseTracking(True)
+        self.set_events(events)
+
+    def set_events(self, events):
+        self.events = events
         self._hover = -1
         if events:
             self.t0 = events[0][0].timestamp()
             self.t1 = events[-1][0].timestamp()
             if self.t1 <= self.t0:
                 self.t1 = self.t0 + 1
+        self.update()
 
     def _x(self, ts, m, w):
         return m + (ts - self.t0) / (self.t1 - self.t0) * (w - 2 * m)
@@ -94,15 +103,66 @@ class TimelineView(QWidget):
     def __init__(self, ds: DataSource):
         super().__init__()
         v = QVBoxLayout(self); v.setContentsMargins(20, 16, 20, 16); v.setSpacing(12)
-        events = _events(ds)
+
+        self.model = RecordTableModel(ds, "timeline")
+
         ribbon_card = QFrame(); ribbon_card.setObjectName("card")
         rl = QVBoxLayout(ribbon_card); rl.setContentsMargins(12, 10, 12, 10)
-        rl.addWidget(QLabel(f"Activity timeline — {len(events)} events  ·  times in UTC"))
-        self.ribbon = TimelineRibbon(events); rl.addWidget(self.ribbon)
+        self.head = QLabel(); rl.addWidget(self.head)
+        self.ribbon = TimelineRibbon(_to_events(self._records())); rl.addWidget(self.ribbon)
         v.addWidget(ribbon_card)
+
+        # filter row: the master timeline is the view analysts date-bound most
+        fr = QHBoxLayout(); fr.setSpacing(8)
+        self.f_from = QLineEdit(); self.f_from.setPlaceholderText("From  YYYY-MM-DD")
+        self.f_to = QLineEdit(); self.f_to.setPlaceholderText("To  YYYY-MM-DD")
+        self.f_text = QLineEdit(); self.f_text.setPlaceholderText("🔍  contains…")
+        for wdg in (self.f_from, self.f_to):
+            wdg.setMaximumWidth(160); wdg.returnPressed.connect(self._apply)
+        self.f_text.returnPressed.connect(self._apply)
+        apply_btn = QPushButton("Apply"); apply_btn.setObjectName("primary")
+        apply_btn.clicked.connect(self._apply)
+        clear_btn = QPushButton("Clear"); clear_btn.clicked.connect(self._clear)
+        self.msg = QLabel(""); self.msg.setObjectName("kvKey")
+        self.msg.setStyleSheet(f"color:{C['amber']};")
+        fr.addWidget(self.f_from); fr.addWidget(self.f_to); fr.addWidget(self.f_text, 1)
+        fr.addWidget(apply_btn); fr.addWidget(clear_btn); fr.addWidget(self.msg)
+        v.addLayout(fr)
+
         self.table = QTableView()
-        self.table.setModel(RecordTableModel(ds, "timeline"))
+        self.table.setModel(self.model)
         self.table.setAlternatingRowColors(True)
+        self.table.setSortingEnabled(True)
         self.table.verticalHeader().setVisible(False)
         self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.horizontalHeader().setResizeContentsPrecision(200)
         v.addWidget(self.table, 1)
+        self._refresh_head()
+
+    def _records(self) -> list[dict]:
+        return [self.model.record_at(i) for i in range(self.model.rowCount())]
+
+    def _refresh_head(self):
+        self.head.setText(f"Activity timeline — {self.model.rowCount()} events"
+                          f"  ·  times in UTC")
+
+    def _apply(self):
+        ok_f, date_from = parse_user_date(self.f_from.text())
+        ok_t, date_to = parse_user_date(self.f_to.text())
+        if not (ok_f and ok_t):
+            self.msg.setText("dates must be YYYY-MM-DD — filter NOT applied")
+            return
+        self.msg.setText("")
+        spec = FilterSpec(text=self.f_text.text().strip(),
+                          date_from=date_from, date_to=date_to)
+        self.model.set_filter(spec)
+        self.ribbon.set_events(_to_events(self._records()))
+        self._refresh_head()
+
+    def _clear(self):
+        for wdg in (self.f_from, self.f_to, self.f_text):
+            wdg.clear()
+        self.msg.setText("")
+        self.model.set_filter(None)
+        self.ribbon.set_events(_to_events(self._records()))
+        self._refresh_head()

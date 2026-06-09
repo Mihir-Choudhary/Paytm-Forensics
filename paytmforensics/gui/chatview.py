@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 
+from .chatlogic import payment_status, conversation_label
 from .datasource import DataSource
 from .theme import C
 
@@ -45,14 +46,7 @@ class ChatView(QWidget):
         convos = {}
         for chan, items in by_chan.items():
             items.sort(key=_ts)
-            # prefer the resolved counterparty from channel membership
-            name = next((m.get("chat_with") for m in items if m.get("chat_with")), None)
-            if not name:
-                # else first sender that is not the subject
-                name = next((m.get("sender_name") for m in items
-                             if m.get("sender_id") != self.subject_sb and m.get("sender_name")), None)
-            if not name:
-                name = "Outgoing (merchant)"
+            name = conversation_label(items, self.subject_sb, chan)
             convos[chan] = {"name": name, "messages": items, "count": len(items)}
         return convos
 
@@ -133,17 +127,11 @@ class ChatView(QWidget):
     @staticmethod
     def _status(m: dict):
         """Return (glyph, color, label) describing the payment/message status."""
-        mt = (m.get("msg_type") or "").upper()
-        content = (m.get("content") or "").lower()
-        if "FAIL" in mt or "fail" in content:
-            return ("✗", C["red"], "failed")
-        if "declined" in content or "DECLINE" in mt:
-            return ("✗", C["red"], "declined")
-        if "REQUEST" in mt and "RESPONSE" not in mt:
-            return ("⏳", C["amber"], "requested")
-        if "TRANSFER" in mt or "approved" in content or "RESPONSE" in mt:
-            return ("✓", C["green"], "success")
-        return ("", C["text_dim"], "")
+        label = payment_status(m.get("msg_type"), m.get("content"), m.get("amount"))
+        style = {"failed": ("✗", C["red"]), "declined": ("✗", C["red"]),
+                 "requested": ("⏳", C["amber"]), "success": ("✓", C["green"])}
+        glyph, color = style.get(label, ("", C["text_dim"]))
+        return (glyph, color, label)
 
     def _bubble(self, m: dict, outgoing: bool) -> QWidget:
         row = QWidget(); h = QHBoxLayout(row); h.setContentsMargins(2, 0, 2, 0)

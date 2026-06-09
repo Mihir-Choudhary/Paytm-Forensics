@@ -1,8 +1,27 @@
 """Pure-Python filtering logic (no Qt) — unit-testable headlessly (FR-G3)."""
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Any, Optional
+
+_USER_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}([T ]\d{2}:\d{2}(:\d{2})?)?$")
+
+
+def parse_user_date(s: str | None) -> tuple[bool, Optional[str]]:
+    """Validate/normalise an analyst-typed date for FilterSpec.
+
+    Accepts "YYYY-MM-DD" optionally followed by " HH:MM[:SS]" or "THH:MM[:SS]".
+    Returns (ok, normalised). Empty input is valid and means "no bound".
+    A malformed date returns (False, None) so callers can refuse to apply the
+    filter instead of silently matching nothing.
+    """
+    s = (s or "").strip()
+    if not s:
+        return True, None
+    if not _USER_DATE_RE.match(s):
+        return False, None
+    return True, s.replace(" ", "T")
 
 
 def record_utc(rec: dict) -> Optional[str]:

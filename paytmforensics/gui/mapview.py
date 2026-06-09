@@ -9,6 +9,8 @@ Leaflet JS/CSS are bundled locally; only tiles require a connection.
 from __future__ import annotations
 
 import json
+import os
+import tempfile
 
 from PySide6.QtWidgets import (
     QWidget, QHBoxLayout, QVBoxLayout, QListWidget, QListWidgetItem, QLabel, QFrame
@@ -46,6 +48,13 @@ def _read(path: str) -> str:
             return f.read()
     except OSError:
         return ""
+
+
+def _unlink_quiet(path: str) -> None:
+    try:
+        os.unlink(path)
+    except OSError:
+        pass
 
 
 def build_map_html(fixes: list[dict], dark: bool = True) -> str:
@@ -171,8 +180,16 @@ class MapView(QWidget):
             from PySide6.QtWebEngineWidgets import QWebEngineView
             from .theme import current_theme
             view = QWebEngineView()
-            view.setHtml(build_map_html(self.fixes, dark=(current_theme() == "dark")),
-                         QUrl("https://localhost/"))
+            html = build_map_html(self.fixes, dark=(current_theme() == "dark"))
+            # setHtml() silently drops content above Qt's 2 MB limit (inline Leaflet
+            # + thousands of fixes exceed it) — load from a temp file instead
+            fd, path = tempfile.mkstemp(prefix="ptmfx_map_", suffix=".html")
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                f.write(html)
+            # free-function cleanup: must not touch self, which may already be
+            # mid-destruction when the child's destroyed signal fires
+            view.destroyed.connect(lambda *_, p=path: _unlink_quiet(p))
+            view.setUrl(QUrl.fromLocalFile(path))
             self._is_web = True
             return view
         except Exception:

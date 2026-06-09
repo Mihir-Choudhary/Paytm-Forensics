@@ -68,7 +68,8 @@ class BarRow(QWidget):
         h = QHBoxLayout(self); h.setContentsMargins(0, 2, 0, 2); h.setSpacing(8)
         lab = QLabel(label); lab.setObjectName("kvKey"); lab.setMinimumWidth(90)
         bar = QFrame(); bar.setFixedHeight(14)
-        pct = 0 if total <= 0 else max(2, int(220 * value / total))
+        # zero stays zero — a 2px sliver would imply a nonzero amount
+        pct = 0 if total <= 0 or value <= 0 else max(2, int(220 * value / total))
         bar.setFixedWidth(pct)
         bar.setStyleSheet(f"background:{color}; border-radius:7px;")
         val = QLabel(f"{value:g}"); val.setObjectName("kvVal")
