@@ -56,6 +56,11 @@ class RecordTableModel(QAbstractTableModel):
         if role == Qt.DisplayRole:
             rec = self._rows[index.row()]
             return self.ds.cell(rec, self._cols[index.column()])
+        if role == Qt.TextAlignmentRole:
+            v = self._rows[index.row()].get(self._cols[index.column()])
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                return int(Qt.AlignRight | Qt.AlignVCenter)   # amounts scan vertically
+            return None
         if role == Qt.ToolTipRole:
             rec = self._rows[index.row()]
             p = rec.get("provenance", {})

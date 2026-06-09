@@ -9,10 +9,10 @@ from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QListWidget,
     QListWidgetItem, QTableView, QLineEdit, QComboBox, QLabel, QSplitter,
     QTextEdit, QPushButton, QFileDialog, QFrame, QMessageBox, QStatusBar,
-    QStackedWidget, QHeaderView, QGridLayout,
+    QStackedWidget, QHeaderView, QGridLayout, QMenu,
 )
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
+from PySide6.QtCore import Qt, QSettings
+from PySide6.QtGui import QFont, QKeySequence, QShortcut
 
 # Import WebEngine before QApplication is created (required by Qt) so the map view works.
 try:
@@ -37,9 +37,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("PaytmForensics")
         self.resize(1440, 880)
         self._model: RecordTableModel | None = None
+        self._field_filters: dict = {}     # column -> value, set via right-click
         self.setStyleSheet(qss())
         self._build()
         self._populate_nav()
+        self._install_shortcuts()
 
     def _load_meta(self):
         try:
@@ -141,6 +143,8 @@ class MainWindow(QMainWindow):
         # bound the rows sampled by resizeColumnsToContents (large domains freeze otherwise)
         self.table.horizontalHeader().setResizeContentsPrecision(200)
         self.table.clicked.connect(self._on_row_click)
+        self.table.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.table.customContextMenuRequested.connect(self._table_menu)
         split.addWidget(self.table)
 
         detail_wrap = QFrame(); detail_wrap.setObjectName("card")
@@ -177,6 +181,11 @@ class MainWindow(QMainWindow):
         g.addWidget(QLabel("Amount"), 1, 3); g.addWidget(self.f_amin, 1, 4); g.addWidget(self.f_amax, 1, 5)
         g.addWidget(QLabel("Dir"), 1, 6); g.addWidget(self.f_dir, 1, 7)
         g.addWidget(self.f_src, 2, 0, 1, 8)
+        # right-click "filter by this value" chips (cleared by Clear / domain switch)
+        self.f_chips = QLabel(); self.f_chips.setObjectName("kvKey")
+        self.f_chips.setStyleSheet(f"color:{C['accent_cyan']};")
+        self.f_chips.setVisible(False)
+        g.addWidget(self.f_chips, 3, 0, 1, 8)
         return card
 
     # --------------------------------------------------------------- nav/data #
@@ -246,6 +255,9 @@ class MainWindow(QMainWindow):
             return
         # build the table model regardless (export uses it); show chat view for messages
         self.title.setText(DOMAIN_LABELS.get(dom, dom))
+        # field filters are column-specific — they don't carry across domains
+        self._field_filters = {}
+        self._refresh_chips()
         # each domain starts unsorted (insertion order = case-DB order)
         self.table.horizontalHeader().setSortIndicator(-1, Qt.AscendingOrder)
         self._model = RecordTableModel(self.ds, dom)
@@ -283,6 +295,7 @@ class MainWindow(QMainWindow):
     def _toggle_theme(self):
         new = "light" if current_theme() == "dark" else "dark"
         set_theme(new)
+        QSettings("PaytmForensics", "GUI").setValue("theme", new)
         # the window carries its own stylesheet which overrides the app one — update both
         self.setStyleSheet(qss())
         app = QApplication.instance()
@@ -345,6 +358,7 @@ class MainWindow(QMainWindow):
             direction=(self.f_dir.currentText()
                        if self.f_dir.currentText() in ("credit", "debit") else None),
             source_contains=self.f_src.text().strip(),
+            field_equals=dict(self._field_filters),
         )
         return (None, errors) if errors else (spec, [])
 
@@ -363,9 +377,73 @@ class MainWindow(QMainWindow):
         for w in (self.f_text, self.f_from, self.f_to, self.f_amin, self.f_amax, self.f_src):
             w.clear()
         self.f_origin.setCurrentIndex(0); self.f_dir.setCurrentIndex(0)
+        self._field_filters = {}
+        self._refresh_chips()
         if self._model:
             self._model.set_filter(None)
             self.statusBar().showMessage(f"{self._model.rowCount()} rows (no filter)")
+
+    def _refresh_chips(self):
+        txt = "   ·   ".join(f"{k} = {v}" for k, v in self._field_filters.items())
+        self.f_chips.setText(f"Field filters:   {txt}" if txt else "")
+        self.f_chips.setVisible(bool(txt))
+
+    # ------------------------------------------------------- table context menu #
+    def _table_menu(self, pos):
+        if not self._model:
+            return
+        idx = self.table.indexAt(pos)
+        if not idx.isValid():
+            return
+        rec = self._model.record_at(idx.row())
+        col = self._model._cols[idx.column()]
+        cell = self.ds.cell(rec, col)
+        short = cell if len(cell) <= 28 else cell[:28] + "…"
+        menu = QMenu(self)
+        menu.addAction("Copy cell",
+                       lambda: QApplication.clipboard().setText(cell))
+        menu.addAction("Copy record as JSON",
+                       lambda: QApplication.clipboard().setText(
+                           json.dumps(rec, indent=2, ensure_ascii=False)))
+        raw_v = rec.get(col)
+        if isinstance(raw_v, (str, int, float, bool)) and cell:
+            menu.addSeparator()
+            menu.addAction(f'Filter:  {col} = “{short}”',
+                           lambda: self._filter_field_equals(col, raw_v))
+        if cell:
+            menu.addAction(f'Search everywhere for “{short}”',
+                           lambda: self._search_value(cell))
+        menu.exec(self.table.viewport().mapToGlobal(pos))
+
+    def _filter_field_equals(self, col: str, value):
+        self._field_filters[col] = value
+        self._refresh_chips()
+        self._apply()
+
+    def _search_value(self, value: str):
+        self.search_box.setText(value)
+        self._global_search()
+
+    # ------------------------------------------------------------- shortcuts #
+    def _install_shortcuts(self):
+        QShortcut(QKeySequence.Find, self, activated=self._shortcut_find)      # Ctrl+F
+        QShortcut(QKeySequence("Ctrl+K"), self, activated=self._shortcut_global)
+        QShortcut(QKeySequence(Qt.Key_Escape), self, activated=self._shortcut_esc)
+
+    def _shortcut_find(self):
+        """Ctrl+F: focus the filter box on a table view, else the global search."""
+        if self.stack.currentIndex() == 1:
+            self.f_text.setFocus(); self.f_text.selectAll()
+        else:
+            self._shortcut_global()
+
+    def _shortcut_global(self):
+        self.search_box.setFocus(); self.search_box.selectAll()
+
+    def _shortcut_esc(self):
+        """Esc on a table view clears the filters."""
+        if self.stack.currentIndex() == 1:
+            self._clear()
 
     def _show_detail(self, rec: dict):
         p = rec.get("provenance", {})
@@ -523,6 +601,8 @@ def launch(case_dir: str):
         QApplication.setAttribute(Qt.AA_ShareOpenGLContexts, True)
     app = QApplication.instance() or QApplication(sys.argv)
     _silence_benign_qt_warnings()
+    saved = QSettings("PaytmForensics", "GUI").value("theme", "dark")
+    set_theme(saved if saved in ("dark", "light") else "dark")
     app.setStyleSheet(qss())
     apply_palette(app)
     win = MainWindow(case_dir)

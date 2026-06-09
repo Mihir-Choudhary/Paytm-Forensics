@@ -123,14 +123,15 @@ class Dashboard(QScrollArea):
         return card
 
     def _timeline_card(self) -> QWidget:
-        card = InfoCard("Recent user activity (latest 12)")
+        card = InfoCard("Recent user activity (latest 12)  ·  click a row to open its domain")
         # focus on meaningful user events; exclude device telemetry & push bookkeeping
         skip = {"diagnostic", "notification"}
         tl = [t for t in self.ds.load("timeline")
               if t.get("utc_iso") and t.get("ref_domain") not in skip]
         tl.sort(key=lambda t: t["utc_iso"], reverse=True)
         for ev in tl[:12]:
-            w = QWidget(); h = QHBoxLayout(w); h.setContentsMargins(0, 2, 0, 2)
+            w = _ClickRow(ev.get("ref_domain"), self.open_domain)
+            h = QHBoxLayout(w); h.setContentsMargins(0, 2, 0, 2)
             glyph, color = DOMAIN_STYLE.get(ev.get("ref_domain"), ("•", C["text_muted"]))
             ic = QLabel(glyph); ic.setStyleSheet(f"color:{color};"); ic.setFixedWidth(18)
             ts = QLabel(ev["utc_iso"][:19].replace("T", " ")); ts.setObjectName("kvKey")
@@ -140,3 +141,18 @@ class Dashboard(QScrollArea):
             h.addWidget(ic); h.addWidget(ts); h.addWidget(sm, 1)
             card.add(w)
         return card
+
+
+class _ClickRow(QWidget):
+    """A dashboard row that opens its domain view when clicked."""
+    def __init__(self, domain: str | None, open_domain_signal):
+        super().__init__()
+        self._dom = domain
+        self._sig = open_domain_signal
+        if domain:
+            self.setCursor(Qt.PointingHandCursor)
+            self.setToolTip(f"Open {domain}")
+
+    def mousePressEvent(self, _e):
+        if self._dom:
+            self._sig.emit(self._dom)
