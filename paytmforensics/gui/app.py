@@ -15,11 +15,16 @@ from PySide6.QtCore import Qt, QSettings
 from PySide6.QtGui import QFont, QKeySequence, QShortcut
 
 # Import WebEngine before QApplication is created (required by Qt) so the map view works.
-try:
-    from PySide6 import QtWebEngineWidgets  # noqa: F401
-    _HAS_WEBENGINE = True
-except Exception:
+# Honour PAYTM_NO_WEBMAP (set when WebEngine is present but non-functional, e.g. CI /
+# a workstation missing Chromium resource packs) so we never touch it there.
+if os.environ.get("PAYTM_NO_WEBMAP"):
     _HAS_WEBENGINE = False
+else:
+    try:
+        from PySide6 import QtWebEngineWidgets  # noqa: F401
+        _HAS_WEBENGINE = True
+    except Exception:
+        _HAS_WEBENGINE = False
 
 from .datasource import DataSource, DOMAIN_LABELS
 from .filters import FilterSpec, parse_user_date

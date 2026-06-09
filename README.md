@@ -263,6 +263,16 @@ pytest tests/test_m11_config_explain.py -v
 ground truth so the full pipeline can be regression-tested on CI without
 distributing private data.
 
+On a headless/CI box where QtWebEngine is installed but **non-functional**
+(missing Chromium resource packs, no GPU/sandbox), constructing a WebEngine
+view aborts the process. Set `PAYTM_NO_WEBMAP=1` to make the GUI map and the
+HTML→PDF fallback skip WebEngine cleanly — the map uses its offline scatter
+view and PDF falls back to WeasyPrint (or a clear error). Recommended for CI:
+
+```bash
+QT_QPA_PLATFORM=offscreen PAYTM_NO_WEBMAP=1 pytest -q
+```
+
 A few tests (in `test_rigorous.py`, `test_audit_fixes.py`, `test_m2.py`,
 `test_m10_extras.py`) assert known PII values from a real extraction
 (subject name / phone / customer-id / a specific RRN, etc.). Those values

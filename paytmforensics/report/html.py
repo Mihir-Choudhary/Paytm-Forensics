@@ -176,6 +176,10 @@ catalogued, not decrypted.</div>
 
 def _pdf_via_qt(html_doc: str, out_path: str) -> bool:
     """Render HTML to PDF using Qt WebEngine (offline). Returns True on success."""
+    # WebEngine may import yet abort the process on use (missing Chromium resource
+    # packs / sandbox); PAYTM_NO_WEBMAP lets such environments skip it cleanly.
+    if os.environ.get("PAYTM_NO_WEBMAP"):
+        return False
     try:
         from PySide6.QtWidgets import QApplication
         from PySide6.QtWebEngineWidgets import QWebEngineView

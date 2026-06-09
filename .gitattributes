@@ -1,0 +1,8 @@
+# Normalise line endings so Windows/Linux checkouts don't churn the whole file.
+* text=auto eol=lf
+
+# Vendored assets: leave bytes exactly as shipped (and don't diff/round-trip them).
+paytmforensics/resources/leaflet/* binary
+*.png binary
+*.pak binary
+*.dat binary

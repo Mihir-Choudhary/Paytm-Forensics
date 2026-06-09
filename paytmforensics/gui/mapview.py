@@ -50,6 +50,23 @@ def _read(path: str) -> str:
         return ""
 
 
+def webengine_available() -> bool:
+    """Whether the interactive (Leaflet) map can be used.
+
+    QtWebEngine may be importable yet non-functional — e.g. a forensic
+    workstation/CI box missing the Chromium resource packs, where constructing
+    a view aborts the process. Setting PAYTM_NO_WEBMAP=1 forces the offline
+    scatter fallback so the GUI degrades gracefully instead of crashing.
+    """
+    if os.environ.get("PAYTM_NO_WEBMAP"):
+        return False
+    try:
+        from PySide6.QtWebEngineWidgets import QWebEngineView  # noqa: F401
+        return True
+    except Exception:
+        return False
+
+
 def _unlink_quiet(path: str) -> None:
     try:
         os.unlink(path)
@@ -176,6 +193,10 @@ class MapView(QWidget):
 
     def _make_map(self):
         """Return a Leaflet QWebEngineView, or the offline scatter on failure."""
+        if not webengine_available():
+            self._is_web = False
+            self.canvas = MapCanvas(self.fixes)
+            return self.canvas
         try:
             from PySide6.QtWebEngineWidgets import QWebEngineView
             from .theme import current_theme
