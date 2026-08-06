@@ -1,0 +1,20 @@
+"""Importing this package registers all parsers in base.REGISTRY."""
+from . import identity          # noqa: F401
+from . import transactions      # noqa: F401
+from . import contacts          # noqa: F401
+from . import chats             # noqa: F401
+from . import location          # noqa: F401
+from . import consents          # noqa: F401
+from . import jobs              # noqa: F401
+from . import notifications     # noqa: F401
+from . import search_state      # noqa: F401
+from . import config_diag       # noqa: F401
+from . import prefs             # noqa: F401
+from . import encrypted         # noqa: F401
+from . import webview           # noqa: F401
+from . import capabilities      # noqa: F401
+from . import appstate          # noqa: F401
+from . import analytics         # noqa: F401
+from . import misc_stores       # noqa: F401
+from . import appfiles          # noqa: F401
+from .base import REGISTRY      # noqa: F401

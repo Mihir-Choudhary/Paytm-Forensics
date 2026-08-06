@@ -1,0 +1,23 @@
+{
+  "_comment": "Copy this to tests/_truth.json and fill in values from YOUR extraction. _truth.json is gitignored. When absent, tests assert structural correctness only; with it, they also check known values.",
+  "subject": {
+    "name": "<full name from subject row>",
+    "phone": "<10-digit subject mobile>",
+    "customer_id": "<paytm customer id>"
+  },
+  "subject_prefs": {
+    "mobile_key_value": "<10-digit number expected under prefs key 'mobile'>"
+  },
+  "known_rrn_any": "<one RRN string known to appear in the messages domain>",
+  "known_merchant": {
+    "vpa": "<a merchant VPA appearing in passbook, e.g. example-1234@ptybl>",
+    "rrn": "<RRN seen for that merchant txn>",
+    "account_used": "<account_used field value, e.g. NNNN_BANKNNNNNNN>",
+    "global_search_token": "<a substring of the merchant's name visible in app-state>"
+  },
+  "known_counterparty": {
+    "amount": 0.0,
+    "mobile": "<10-digit mobile found in passbook searchableStrings>"
+  },
+  "crash_user_id": "<paytm user id surfaced in crash sessions>"
+}

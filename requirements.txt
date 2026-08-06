@@ -1,0 +1,16 @@
+# Core (M0/M1) uses only the Python standard library.
+# The following are needed for later milestones:
+
+# M4 GUI
+PySide6>=6.6
+
+# M5 reporting
+Jinja2>=3.1
+weasyprint>=60        # HTML -> PDF (offline)
+
+# M2/M7 best-effort decoders
+protobuf>=4.25
+plyvel>=1.5 ; platform_system != "Windows"   # LevelDB (WebView Local Storage)
+
+# Testing
+pytest>=8.0

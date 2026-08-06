@@ -1,0 +1,1539 @@
+{
+  "status": "SUCCESS",
+  "message": "Data is successfully fetched",
+  "response": {
+    "list": [
+      {
+        "id": "69b9622c156c09453be26f43",
+        "key": "saving_acc_interest",
+        "value": "1.5%##6.75%"
+      },
+      {
+        "id": "69b2b1e5156c09453bc1d858",
+        "key": "dynamicWalletLandingGenericURL_android_v2",
+        "value": "https://firebasestorage.googleapis.com/v0/b/paytmbank-prod.appspot.com/o/Android%2Fwallet%2FwalletLandingGeneric120326.json?alt=media&token=0949861f-917c-449e-9ee8-8505092f81a3"
+      },
+      {
+        "id": "69381070156c09453bc81317",
+        "key": "bank_p2p_api_public_key",
+        "value": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtAFOUnxxGlpUlYQzSVCnJiJRMUABuzp6whnkMmVYtgHJtJ01JqvXej6sZeLshGZjag4gGkE0DIQQhRM7YD/bdZEzEFvc7rHS9OOKqetmy9jo2GjGm/oc6lyJBi6zeJF4K/U8p5xKWf8H7M54UgELlJDwvBllqGl/4IXZK7MO2ecI3mMnKdDzPhKhAK7cPNSwZdqDzHnun84BD66m2ZuGeTrbmMoRoasM6QHSrCbstb9YQHP8d84FjtaNxOU+YM1OqY4GtVyYoTENeih+3aGz3m86wa2OA1Ez4Bf5fOyTNYYL+uSO1es4xJy6xE1cuJJUycfq81lxzdr5TwT3hzOXBQIDAQAB"
+      },
+      {
+        "id": "6900a004156c09453bf57d48",
+        "key": "walletLandingGenericURL_android",
+        "value": "https://firebasestorage.googleapis.com/v0/b/paytmbank-prod.appspot.com/o/Android%2Fwallet%2FwalletLandingGenericV7.json?alt=media&token=dfa1913b-e785-4852-aeec-4ebb286f7f33"
+      },
+      {
+        "id": "69009fff156c09453bf57d2b",
+        "key": "dynamicWalletLandingGenericURL_android",
+        "value": "https://firebasestorage.googleapis.com/v0/b/paytmbank-prod.appspot.com/o/Android%2Fwallet%2FwalletLandingGenericV7.json?alt=media&token=dfa1913b-e785-4852-aeec-4ebb286f7f33"
+      },
+      {
+        "id": "69009ff4156c09453bf57ce5",
+        "key": "vkycinternalH5Url",
+        "value": "https://vkyc.paytm.bank.in"
+      },
+      {
+        "id": "6863a01541c38579aa1d87de",
+        "key": "bankAppManagerUrl",
+        "value": "https://app-manager.paytmbank.com/v1/api/app-manager/config"
+      },
+      {
+        "id": "6863a00241c38579aa1d87a7",
+        "key": "bankAppManagerSyncRefreshTime",
+        "value": "10080"
+      },
+      {
+        "id": "6859467841c38579aa02a1ce",
+        "key": "bankErrorSdkCompleteUrl",
+        "value": "https://eagle.paytmbank.com/v1/oclandroidapp/appdebuganalytics/triggers/save"
+      },
+      {
+        "id": "6859466341c38579aa02a191",
+        "key": "hawkeyeEngineRule",
+        "value": "{{\"whiteListedUsers\":[],\"rules\":[{\"eventType\":\"apiLog\",\"verticalName\":\"SIGNAL_SDK\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"appmanager_keys_fetch_time\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"localisation_keys_fetch_time\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"firebase-config-fetch\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"true_time_difference\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"TrueTimeApiLog\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"TrueTimeApiError\",\"block\":true},{\"eventType\":\"performanceLog\",\"clientId\":\"androidapp\"},{\"eventType\":\"localError\",\"flowName\":\"fb-realtime\",\"block\":true},{\"verticalName\":\"COMS\",\"eventType\":\"localError\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"common_sms_listener_work_start\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"sms_sdk_work_upload\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"sms_sdk_work_wake_up\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"common_sms_work_timeout\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"diff_from_msg_received\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"Task-Logging\"},{\"eventType\":\"apiLog\",\"flowName\":\"Task-Logging\"},{\"eventType\":\"localError\",\"flowName\":\"Task-Enqueue\"},{\"eventType\":\"apiLog\",\"flowName\":\"Task-Enqueue\"},{\"eventType\":\"localError\",\"flowName\":\"common_sms_listener_work\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"APP_LAUNCH\",\"block\":true},{\"eventType\":\"localError\",\"flowName\":\"common_sms_worker_start\"},{\"eventType\":\"localError\",\"flowName\":\"common_sms_worker_end\"},{\"eventType\":\"localError\",\"flowName\":\"Sms-Task-Summary\"},{\"eventType\":\"localError\",\"flowName\":\"Summary-SmsUploadTask\"},{\"eventType\":\"localError\",\"flowName\":\"Summary-FraudSmsTask\"}]}"
+      },
+      {
+        "id": "680b494e41c38579aa37b195",
+        "key": "kyc_selfie_upload_url",
+        "value": "https://dms.paytmbank.com/dm/document/v1/uploadDocument"
+      },
+      {
+        "id": "680b493d41c38579aa37b161",
+        "key": "pbAddressDlUrl",
+        "value": "https://dbt.paytmbank.com/ovd/doc-upload"
+      },
+      {
+        "id": "680b492f41c38579aa37b137",
+        "key": "kycFraudRedressalH5Url",
+        "value": "https://dbt.paytmbank.com/redressal"
+      },
+      {
+        "id": "680b491f41c38579aa37b10b",
+        "key": "ckycH5Url",
+        "value": "https://dbt.paytmbank.com/static-screen"
+      },
+      {
+        "id": "680b490741c38579aa37b0c8",
+        "key": "kycOVDDeficiencyUrl",
+        "value": "https://dbt.paytmbank.com/ovd/doc-upload"
+      },
+      {
+        "id": "680b48f941c38579aa37b0a2",
+        "key": "kycQrCodeGenerateH5Url",
+        "value": "https://dbt.paytmbank.com/kycqr/home"
+      },
+      {
+        "id": "680b48e841c38579aa37b072",
+        "key": "ckycsubflowH5Url",
+        "value": "https://bankapp-mini.paytmbank.com/ppbl/onboarding/ckyc-selfie-flow"
+      },
+      {
+        "id": "680b48da41c38579aa37b048",
+        "key": "addMoneyUrl",
+        "value": "https://bankapp-mini.paytmbank.com/ppbl/onboarding/add-money"
+      },
+      {
+        "id": "680b48cb41c38579aa37b01b",
+        "key": "kycMinorDeferredH5Url",
+        "value": "https://dbt.paytmbank.com/gc/"
+      },
+      {
+        "id": "680b48bc41c38579aa37aff5",
+        "key": "kycH5CommonUrl",
+        "value": "https://dbt.paytmbank.com/kyc/base-landing"
+      },
+      {
+        "id": "680b48a441c38579aa37afa2",
+        "key": "kycH5CommonMiniAppUrl",
+        "value": "https://bankapp-mini.paytmbank.com/ppbl/base-landing"
+      },
+      {
+        "id": "680b486641c38579aa37aeed",
+        "key": "kycCashbackText",
+        "value": "Upgrade Now & Enjoy More Cashback and Higher Spend Limit ! Complete your KYC to avail"
+      },
+      {
+        "id": "680b484a41c38579aa37aea5",
+        "key": "url_kyc_know_more",
+        "value": "https://paytm.com/offers/paytm200.html"
+      },
+      {
+        "id": "680b47f341c38579aa37adb5",
+        "key": "kycFetchProfileInfoV2",
+        "value": "https://kyc.paytmbank.com/v2/profile/getInfo"
+      },
+      {
+        "id": "680b47d541c38579aa37ad65",
+        "key": "min_kyc_status_v3_url",
+        "value": "https://kyc.paytmbank.com/kyc/v3/status"
+      },
+      {
+        "id": "680b3e0f41c38579aa3793cd",
+        "key": "isKycAndroidKeyBoardCheckEnabled",
+        "value": "true"
+      },
+      {
+        "id": "680b3dca41c38579aa37930c",
+        "key": "full_kyc_pop_up_mandate",
+        "value": "false"
+      },
+      {
+        "id": "680b3db041c38579aa3792c9",
+        "key": "kyc_complete_cashback_view",
+        "value": "false"
+      },
+      {
+        "id": "680b3d9441c38579aa37926b",
+        "key": "isMinKycOTPRequired",
+        "value": "true"
+      },
+      {
+        "id": "680b3d8141c38579aa379233",
+        "key": "kycEnableRootedCheckV2",
+        "value": "true"
+      },
+      {
+        "id": "680b3d6641c38579aa3791f0",
+        "key": "isKycLogRootedCheckEnableV2",
+        "value": "true"
+      },
+      {
+        "id": "680b3d4441c38579aa379193",
+        "key": "isKYCBootCheckEnable",
+        "value": "true"
+      },
+      {
+        "id": "680b3c4141c38579aa378ee0",
+        "key": "kycEnableTemperingCheck",
+        "value": "true"
+      },
+      {
+        "id": "680b3c2941c38579aa378ea2",
+        "key": "kycEnableEmuCheckV3",
+        "value": "true"
+      },
+      {
+        "id": "680b3bff41c38579aa378e32",
+        "key": "isKYCTbJCheckEnable",
+        "value": "true"
+      },
+      {
+        "id": "67a4bb4841c38579aa2cf972",
+        "key": "amIsDynamicBannerFeatureEnabledVersion",
+        "value": "10.40.0"
+      },
+      {
+        "id": "67a4bb3d41c38579aa2cf952",
+        "key": "networkEnableEagerInit_33",
+        "value": "false"
+      },
+      {
+        "id": "67a4bb3241c38579aa2cf92b",
+        "key": "isHawkeyeFilterEnabled",
+        "value": "false"
+      },
+      {
+        "id": "67a4baff41c38579aa2cf87a",
+        "key": "bankErrorSdkShowLogs",
+        "value": "false"
+      },
+      {
+        "id": "67a4bada41c38579aa2cf807",
+        "key": "bankErrorSdkVerticalList",
+        "value": "[gift_voucher, gift voucher, fastag, banksavingsaccount, bank, kyc_new, paymentsbank, ppbl, kyc, cdd, cdd_wallet, wallet_h5, wallet]"
+      },
+      {
+        "id": "67a4ba6341c38579aa2cf6bb",
+        "key": "bankErrorSdkEventUploadSchedulingTime",
+        "value": "300"
+      },
+      {
+        "id": "67a4ba4f41c38579aa2cf682",
+        "key": "bankErrorSdkBatchSize",
+        "value": "10"
+      },
+      {
+        "id": "67a4ba3741c38579aa2cf63f",
+        "key": "bankErrorSdkUrl",
+        "value": "https://eagle.paytmbank.com"
+      },
+      {
+        "id": "67a4ba2441c38579aa2cf608",
+        "key": "ppblNetworkSslConfig",
+        "value": "[{\"domain\":\"*.paytmbank.com\",\"value\":\"sha256/r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=\",\"isEnabled\":true}]"
+      },
+      {
+        "id": "67a4ba1041c38579aa2cf5d0",
+        "key": "ppblSslEnableStatus",
+        "value": "true"
+      },
+      {
+        "id": "678505d441c38579aad1bfa9",
+        "key": "bankEnableEmuCheckV3",
+        "value": "true"
+      },
+      {
+        "id": "678505ca41c38579aad1bf8d",
+        "key": "pb_h5_bankOnboarding_deeplink",
+        "value": "paytmmp://payment_bank?featuretype=without_pass&open_screen=isa_onboarding"
+      },
+      {
+        "id": "678505c241c38579aad1bf6c",
+        "key": "default_option_to_addMoney",
+        "value": "TO_WALLET"
+      },
+      {
+        "id": "678505b941c38579aad1bf4f",
+        "key": "p2b_2fa_client_secret",
+        "value": "91c0060c-c43c-4a25-af88-4259996e864b"
+      },
+      {
+        "id": "678505b041c38579aad1bf37",
+        "key": "p2b_home_url",
+        "value": "https://storefront.paytm.com/v2/h/p2b-post-transaction"
+      },
+      {
+        "id": "6785052441c38579aad1bdb1",
+        "key": "walletValidateTransaction",
+        "value": "https://trust.paytmbank.com/wallet-web/validateTransaction"
+      },
+      {
+        "id": "6785051441c38579aad1bd6f",
+        "key": "addmoney_total_polling_count",
+        "value": "15"
+      },
+      {
+        "id": "678504fe41c38579aad1bd34",
+        "key": "pbH5UrlWithoutPass",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/withoutpass"
+      },
+      {
+        "id": "678504f341c38579aad1bd0c",
+        "key": "bankStatusBarColor",
+        "value": "#ffffff"
+      },
+      {
+        "id": "678504e941c38579aad1bce8",
+        "key": "isBankBootCheckEnable",
+        "value": "true"
+      },
+      {
+        "id": "678504db41c38579aad1bcc1",
+        "key": "check_p2b_transaction_status",
+        "value": "https://trust.paytmbank.com/wallet-web/v2/checkStatus/txn"
+      },
+      {
+        "id": "678504cf41c38579aad1bc9b",
+        "key": "isLogRootedCheckEnableV2",
+        "value": "true"
+      },
+      {
+        "id": "678504b541c38579aad1bc48",
+        "key": "bankRootCheckM3KeyList",
+        "value": "/system/xbin/which, su"
+      },
+      {
+        "id": "678504aa41c38579aad1bc24",
+        "key": "passcodeExistsURLV3",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v3/passcode-exists"
+      },
+      {
+        "id": "678503ca41c38579aad1b9ac",
+        "key": "bankscope_client_id_android",
+        "value": "bank-oauth-androidapp-default-prod"
+      },
+      {
+        "id": "6785038c41c38579aad1b900",
+        "key": "bankscope_secret_key_android",
+        "value": "d2a94e4b-840d-41e3-bb14-37e826ae7ad1"
+      },
+      {
+        "id": "6785038241c38579aad1b8dc",
+        "key": "bankRootCheckM2KeyList",
+        "value": "/system/app/Superuser.apk, /sbin/su, /system/bin/su, /system/xbin/su, /data/local/xbin/su, /data/local/bin/su, /system/sd/xbin/su, /system/bin/failsafe/su, /data/local/su, /su/bin/su"
+      },
+      {
+        "id": "6785033f41c38579aad1b814",
+        "key": "bank_2fa_client_secret",
+        "value": "d2a94e4b-840d-41e3-bb14-37e826ae7ad1"
+      },
+      {
+        "id": "678502f641c38579aad1b70f",
+        "key": "is2fadevicebindingflowiAndroid",
+        "value": "true"
+      },
+      {
+        "id": "678502c141c38579aad1b61b",
+        "key": "amSFWalletLandingIsCacheEnabledVersion",
+        "value": "10.40.0"
+      },
+      {
+        "id": "678502b441c38579aad1b5f0",
+        "key": "am_manual_promo_flow_key",
+        "value": "true"
+      },
+      {
+        "id": "6785029b41c38579aad1b5a0",
+        "key": "isBankTbJCheckEnable",
+        "value": "true"
+      },
+      {
+        "id": "6785006b41c38579aad1afbe",
+        "key": "walletResendOtp",
+        "value": "https://trust.paytmbank.com/wallet-web/resendOtp"
+      },
+      {
+        "id": "677be51e41c38579aab89f2d",
+        "key": "gtmOauthCheckSmsDeliveredReceipt",
+        "value": "false"
+      },
+      {
+        "id": "677be51741c38579aab89f12",
+        "key": "gtmDefaultDeBPollingThreshold",
+        "value": "20"
+      },
+      {
+        "id": "677be51041c38579aab89ef2",
+        "key": "gtmDefaultDeBTimeout",
+        "value": "35"
+      },
+      {
+        "id": "6750253e59be935104f8b80b",
+        "key": "amWalletMinKycDeeplink",
+        "value": "paytmmp://min_kyc?featuretype=popup"
+      },
+      {
+        "id": "6750253e59be935104f8b80a",
+        "key": "amWalletEligibleRbiWalletTypeList",
+        "value": "[\"PAYTM_BASIC_WALLET\", \"PAYTM_PRIME_WALLET\", \"PAYTM_MIN_KYC_LOCKED\", \"PAYTM_MIN_KYC_EXPIRED\", \"PAYTM_ADHAAR_OTP_KYC\",\"PAYTM_ADHAAR_OTP_KYC_EXPIRED\",\"PAYTM_PRIMITIVE\",\"PAYTM_CLOSED\",\"PAYTM_PRIMITIVE_NON_WALLET\",\"PAYTM_BASIC_PLUS\",\"PAYTM_PRIME_RESTRICTED\",\"PAYTM_BASIC_PLUS_CASH_LOADING\"]"
+      },
+      {
+        "id": "6750253e59be935104f8b809",
+        "key": "amIsNewSetPasscodeFeatureEnabledVersion",
+        "value": "10.49.0"
+      },
+      {
+        "id": "6750253e59be935104f8b808",
+        "key": "gtmKeySendSMSTimeout",
+        "value": "20"
+      },
+      {
+        "id": "6750253e59be935104f8b807",
+        "key": "wallet_landing_sf_cachetimeout_android",
+        "value": "72"
+      },
+      {
+        "id": "6750253e59be935104f8b805",
+        "key": "walletLandingSFCachingSupportedVersion_Android",
+        "value": "10.48.0"
+      },
+      {
+        "id": "6750253e59be935104f8b804",
+        "key": "bank_2fa_flow_type",
+        "value": "wallet_2fa"
+      },
+      {
+        "id": "6750253e59be935104f8b803",
+        "key": "bank_2fa_scope",
+        "value": "login"
+      },
+      {
+        "id": "6750253e59be935104f8b801",
+        "key": "bank_2fa_client_id",
+        "value": "bank-oauth-androidapp-default-prod"
+      },
+      {
+        "id": "6750253e59be935104f8b800",
+        "key": "addMoneyDefaultAmountToWallet",
+        "value": "1000"
+      },
+      {
+        "id": "6750253e59be935104f8b7fd",
+        "key": "gtmOauthDebVerifyCross",
+        "value": "10"
+      },
+      {
+        "id": "6750253e59be935104f8b7fc",
+        "key": "gtmOauthDebContinueIntervene",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7fa",
+        "key": "gtmOauthDebVerifyInitialTimer",
+        "value": "20"
+      },
+      {
+        "id": "6750253e59be935104f8b7f9",
+        "key": "bank_bypass_deeplink",
+        "value": "[{}]"
+      },
+      {
+        "id": "6750253e59be935104f8b7f8",
+        "key": "amWalletCardImageUrlV2",
+        "value": "[]"
+      },
+      {
+        "id": "6750253e59be935104f8b7f7",
+        "key": "addMoneyDeferedApiVersion",
+        "value": "2"
+      },
+      {
+        "id": "6750253e59be935104f8b7f6",
+        "key": "p2b_is2faDetailsRequired",
+        "value": "YES"
+      },
+      {
+        "id": "6750253e59be935104f8b7f5",
+        "key": "confirmation_banner_url",
+        "value": "https://storefront.paytm.com/v2/h/p2b-confirmation-screen"
+      },
+      {
+        "id": "6750253e59be935104f8b7f4",
+        "key": "P2bcashBackofferText2",
+        "value": "Terms and Conditions Applied"
+      },
+      {
+        "id": "6750253e59be935104f8b7f3",
+        "key": "shouldShowP2bKnowMore",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7f2",
+        "key": "shouldShowP2bOfferText2",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7f1",
+        "key": "shouldShowP2bOfferText1",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7f0",
+        "key": "w2bBecomeMerchanrUrl",
+        "value": "https://storefront.paytm.com/v2/h/become-a-merchant"
+      },
+      {
+        "id": "6750253e59be935104f8b7ef",
+        "key": "p2b_cashback_url",
+        "value": "https://gateway.paytm.com/api/v4/promocard/supercash/tagoffers"
+      },
+      {
+        "id": "6750253e59be935104f8b7ee",
+        "key": "offerTagP2b",
+        "value": "Wallet To Bank Transfer Offers"
+      },
+      {
+        "id": "6750253e59be935104f8b7ed",
+        "key": "p2bMaxTransactionAmount_Android",
+        "value": "4000"
+      },
+      {
+        "id": "6750253e59be935104f8b7ec",
+        "key": "p2bLimitCheckEnabledVersion_Android",
+        "value": "0.2.5"
+      },
+      {
+        "id": "6750253e59be935104f8b7eb",
+        "key": "p2bAllowedRBIWalletStates",
+        "value": "PAYTM_PRIME_WALLET,PAYTM_PRIME_RESTRICTED,PAYTM_ADHAAR_OTP_KYC"
+      },
+      {
+        "id": "6750253e59be935104f8b7ea",
+        "key": "w2bPostPayMaxPollingCount",
+        "value": "9"
+      },
+      {
+        "id": "6750253e59be935104f8b7e9",
+        "key": "w2bPostPayPollingDuration",
+        "value": "5"
+      },
+      {
+        "id": "6750253e59be935104f8b7e8",
+        "key": "default_wallet_timeout",
+        "value": "60000"
+      },
+      {
+        "id": "6750253e59be935104f8b7e7",
+        "key": "amWalletCardBottomSheetEnabled",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7e6",
+        "key": "amWalletCardApiStatus",
+        "value": "status?product=PREPAID_CARD"
+      },
+      {
+        "id": "6750253e59be935104f8b7e5",
+        "key": "amWalletCardApi",
+        "value": "https://product.paytmbank.com/product/ext/v1/cards/"
+      },
+      {
+        "id": "6750253e59be935104f8b7e4",
+        "key": "amWalletCardRolloutPercentage",
+        "value": "100"
+      },
+      {
+        "id": "6750253e59be935104f8b7e3",
+        "key": "amWalletCardAllowedKycStates",
+        "value": "PAYTM_PRIME_WALLET"
+      },
+      {
+        "id": "6750253e59be935104f8b7e2",
+        "key": "amWalletCardEnabledV2",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7e1",
+        "key": "amSFWalletLandingPageDeepLink",
+        "value": "paytmmp://addmoney?url=https://storefront.paytm.com/v2/h/wallet-landing-page"
+      },
+      {
+        "id": "6750253e59be935104f8b7e0",
+        "key": "amWalletPassbookTxnDetailsCstDeeplink",
+        "value": "paytmpb://mini-app?aId=5bdde7c737ee423b98beb769b281df5e&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2V9LCJwYXJhbXMiOiI/ZmVhdHVyZXR5cGU9Y29tbW9uX21pbmkmb3Blbl9zY3JlZW49Y3N0X2Zsb3cifQ==&verticalId=2"
+      },
+      {
+        "id": "6750253e59be935104f8b7df",
+        "key": "enable_add_money_to_ppb_2",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7de",
+        "key": "p2bLimitValidStates",
+        "value": "PAYTM_ADHAAR_OTP_KYC,PAYTM_PRIME_WALLET"
+      },
+      {
+        "id": "6750253e59be935104f8b7dd",
+        "key": "p2pLimitValidStates",
+        "value": "PAYTM_ADHAAR_OTP_KYC,PAYTM_PRIME_WALLET"
+      },
+      {
+        "id": "6750253e59be935104f8b7dc",
+        "key": "p2mLimitValidStates",
+        "value": "PAYTM_ADHAAR_OTP_KYC,PAYTM_MIN_KYC,PAYTM_PRIME_WALLET,PAYTM_MIN_KYC_LOCKED,PAYTM_PRIMITIVE,PAYTM_BASIC_WALLET"
+      },
+      {
+        "id": "6750253e59be935104f8b7db",
+        "key": "ps_key_gtm_add_money_refund_visibility",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7da",
+        "key": "paymentLimitResendOtpURL",
+        "value": "https://trust.paytmbank.com/wallet-web/resendOtp"
+      },
+      {
+        "id": "6750253e59be935104f8b7d9",
+        "key": "paymentLimitUpdateURl",
+        "value": "https://trust.paytmbank.com/wallet-web/userDefinedLimit/set"
+      },
+      {
+        "id": "6750253e59be935104f8b7d8",
+        "key": "paymentLimitValidateTransactionURL",
+        "value": "https://trust.paytmbank.com/wallet-web/userDefinedLimit/validateTransaction"
+      },
+      {
+        "id": "6750253e59be935104f8b7d7",
+        "key": "paymentLimitDetailURL",
+        "value": "https://trust.paytmbank.com/wallet-web/userDefinedLimit/fetch"
+      },
+      {
+        "id": "6750253e59be935104f8b7d6",
+        "key": "is_location_events_enabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7d5",
+        "key": "pbH5RemittanceUrl",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/remittance/check"
+      },
+      {
+        "id": "6750253e59be935104f8b7d4",
+        "key": "amUpgradeWalletPageDeepLink",
+        "value": "paytmmp://kyc_module?featuretype=common_mini&open_screen=upgrade_wallet&source=wallet"
+      },
+      {
+        "id": "6750253e59be935104f8b7d3",
+        "key": "amWalletFullKYCEligibleStateList",
+        "value": "[\"PAYTM_PRIME_WALLET\", \"PAYTM_PRIME_TRIAL_WALLET\", \"PAYTM_PRIME_RESTRICTED\", \"PAYTM_PRIME_FORM_60_KYC\", \"PAYTM_PRIME_PAN_DEFICIENT\", \"PAYTM_ADHAAR_OTP_KYC\"]"
+      },
+      {
+        "id": "6750253e59be935104f8b7d2",
+        "key": "amWalletMinKYCEligibleStateList",
+        "value": "[\"PAYTM_BASIC_WALLET\", \"PAYTM_MIN_KYC_LOCKED\", \"PAYTM_MIN_KYC\", \"PAYTM_BASIC_PLUS\"]"
+      },
+      {
+        "id": "6750253e59be935104f8b7d1",
+        "key": "amWalletNoKYCEligibleStateList",
+        "value": "[\"PAYTM_MIN_KYC_EXPIRED\", \"PAYTM_ADHAAR_OTP_KYC_EXPIRED\", \"PAYTM_PRIMITIVE_NON_WALLET\", \"PAYTM_PRIMITIVE\", \"PAYTM_CLOSED\"]"
+      },
+      {
+        "id": "6750253e59be935104f8b7d0",
+        "key": "amBlockerPageDeepLink",
+        "value": "paytmmp://kyc_module?featuretype=common_mini&open_screen=wallet_landing_details"
+      },
+      {
+        "id": "6750253e59be935104f8b7cf",
+        "key": "am_wallet_freeze_banner_details_url",
+        "value": "https://trust.paytmbank.com/wallet-bff/fetchLandingDetails"
+      },
+      {
+        "id": "6750253e59be935104f8b7ce",
+        "key": "am_kyc_user_details_url",
+        "value": "https://trust.paytmbank.com/service/v2/fetchUserDetails"
+      },
+      {
+        "id": "6750253e59be935104f8b7cd",
+        "key": "amDisableHawkEyeWithAlert",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7cc",
+        "key": "amDisableSilentHawkEye",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7cb",
+        "key": "am_upgrade_wallet_kyc_deeplink",
+        "value": "paytmmp://upgrade_wallet"
+      },
+      {
+        "id": "6750253e59be935104f8b7ca",
+        "key": "amGenericSubWalletDeepLink",
+        "value": "paytmmp://cash_wallet?featuretype=cash_ledger&tab=subwallet"
+      },
+      {
+        "id": "6750253e59be935104f8b7c9",
+        "key": "amIsBankOffersEnabledOnPG",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7c8",
+        "key": "amSubscriptionThresholdPercentage",
+        "value": "100"
+      },
+      {
+        "id": "6750253e59be935104f8b7c7",
+        "key": "amSubscriptionThresholdDynamicEnabled",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7c6",
+        "key": "amSubscriptionDefaultChecked",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7c5",
+        "key": "am_post_txn_setup_automatic_add_money_deeplink",
+        "value": "paytmmp://mini-app?aId=6195710ba5cb4f33827ababc67f1de5c&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2V9LCJwYXJhbXMiOiI/ZmVhdHVyZXR5cGU9Y29tbW9uX21pbmkmb3Blbl9zY3JlZW49YWFtJmZlYXR1cmV0eXBlPWFkZF9tb25leSZ0YWI9YXV0b21hdGljX2FkZF9tb25leSZwdWxzZV9zb3VyY2U9cG9zdF90eG5fYm90dG9tX3NoZWV0In0="
+      },
+      {
+        "id": "6750253e59be935104f8b7c4",
+        "key": "aam_summary_view_details",
+        "value": "paytmmp://mini-app?aId=6195710ba5cb4f33827ababc67f1de5c&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2V9LCJwYXJhbXMiOiI/ZmVhdHVyZXR5cGU9Y29tbW9uX21pbmkmb3Blbl9zY3JlZW49YWFtJmZlYXR1cmV0eXBlPWFkZF9tb25leSZ0YWI9YXV0b21hdGljX2FkZF9tb25leSZwdWxzZV9zb3VyY2U9cG9zdF90eG5fYm90dG9tX3NoZWV0In0="
+      },
+      {
+        "id": "6750253e59be935104f8b7c3",
+        "key": "addmoney_transit_wallet_deeplink_Key",
+        "value": "paytmmp://mini-app?aId=2ec00a6a370f45519bcfdc14539f4b10&data=eyJwYXJhbXMiOiIiLCJwYXRoIjoiL21hbmFnZS10YXAtY2FyZCIsInNwYXJhbXMiOnsicHVsbFJlZnJlc2giOmZhbHNlLCJjYW5QdWxsRG93biI6ZmFsc2UsInNob3dUaXRsZUJhciI6ZmFsc2UsInJlbmRlcldpdGhpblNhZmVBcmVhIjp0cnVlfX0="
+      },
+      {
+        "id": "6750253e59be935104f8b7c2",
+        "key": "am_wallet_freeze_data",
+        "value": "[{\"freezeStatus\":1,\"tag_key\":\"am_tag_credit_freeze\",\"tag_text\":\"Wallet Credit Freeze\",\"tag_bg\":\"#FF9D00\",\"header_key\":\"am_header_credit_freeze\",\"header_text\":\"You can't add money to your Wallet!\",\"body_key\":\"am_body_credit_freeze\",\"body_text\":\"Your account has been put under credit freeze. Please submit required details to unfreeze your wallet.\",\"cta_key\":\"am_cta_credit_freeze\",\"cta_text\":\"SUBMIT\",\"cta_deeplink\":\"paytmmp://kyc_module?featuretype=common_mini&open_screen=h5_deficiency&flow_initiator=non_bank\"},{\"freezeStatus\":2,\"tag_key\":\"am_tag_debit_freeze\",\"tag_text\":\"Wallet Debit Freeze\",\"tag_bg\":\"#FF9D00\",\"header_key\":\"am_header_debit_freeze\",\"header_text\":\"You can't spend money from your Wallet!\",\"body_key\":\"am_body_debit_freeze\",\"body_text\":\"Your account has been put under debit freeze. Please submit required details to unfreeze your wallet.\",\"cta_key\":\"am_cta_debit_freeze\",\"cta_text\":\"SUBMIT\",\"cta_deeplink\":\"paytmmp://kyc_module?featuretype=common_mini&open_screen=h5_deficiency&flow_initiator=non_bank\"},{\"freezeStatus\":3,\"tag_key\":\"am_tag_total_freeze\",\"tag_text\":\"Wallet Total Freeze\",\"tag_bg\":\"#FF9D00\",\"header_key\":\"am_header_total_freeze\",\"header_text\":\"You can't add money or spend money from your Wallet!\",\"body_key\":\"am_body_total_freeze\",\"body_text\":\"Your account has been put under total freeze. Please submit required details to unfreeze your wallet.\",\"cta_key\":\"am_cta_total_freeze\",\"cta_text\":\"SUBMIT\",\"cta_deeplink\":\"paytmmp://kyc_module?featuretype=common_mini&open_screen=h5_deficiency&flow_initiator=non_bank\"}]"
+      },
+      {
+        "id": "6750253e59be935104f8b7c1",
+        "key": "amIsGooglePlaySdkEnabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7c0",
+        "key": "am_new_promo_flow_key",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7bf",
+        "key": "addMoney_polling_gap_in_seconds_third_party_app",
+        "value": "2"
+      },
+      {
+        "id": "6750253e59be935104f8b7be",
+        "key": "walletActivateMinKycDeeplink_Android",
+        "value": "paytmmp://min_kyc?featuretype=popup"
+      },
+      {
+        "id": "6750253e59be935104f8b7bd",
+        "key": "walletGVKnowMoreLogoURL3_Android",
+        "value": "https://static.paytmbank.com/wallet/files/paytmbankwalletapp/gv_promotion_banner.png"
+      },
+      {
+        "id": "6750253e59be935104f8b7bc",
+        "key": "walletGVKnowMoreLogoURL2_Android",
+        "value": "https://assetscdn1.paytm.com/images/catalog/view/1707818893432.png?1707818901313"
+      },
+      {
+        "id": "6750253e59be935104f8b7bb",
+        "key": "walletGVKnowMoreLogoURL1_Android",
+        "value": "https://static.paytmbank.com/wallet/files/paytmbankwalletapp/gv_promotion_banner.png"
+      },
+      {
+        "id": "6750253e59be935104f8b7ba",
+        "key": "walletBuySendGVCTAEnabled_Android",
+        "value": "20.0.0"
+      },
+      {
+        "id": "6750253e59be935104f8b7b9",
+        "key": "walletAutoAddMoneyCTAEnabled_Android",
+        "value": "20.0.0"
+      },
+      {
+        "id": "6750253e59be935104f8b7b8",
+        "key": "walletAddMoneyCTAEnabled_Android",
+        "value": "20.0.0"
+      },
+      {
+        "id": "6750253e59be935104f8b7b7",
+        "key": "amAAMBottomSheetAllowedRBIKycStates",
+        "value": "PAYTM_PRIME_WALLET,PAYTM_MIN_KYC,PAYTM_ADHAAR_OTP_KYC,PAYTM_BASIC_PLUS_CASH_LOADING,PAYTM_BASIC_PLUS"
+      },
+      {
+        "id": "6750253e59be935104f8b7b6",
+        "key": "amLowBalanceIndicatorAllowedWalletRBIStates",
+        "value": "PAYTM_PRIME_WALLET,PAYTM_ADHAAR_OTP_KYC,PAYTM_BASIC_PLUS_CASH_LOADING,PAYTM_BASIC_PLUS,PAYTM_PRIME_RESTRICTED"
+      },
+      {
+        "id": "6750253e59be935104f8b7b5",
+        "key": "addmoney_total_polling_count_thirdparty_app",
+        "value": "3"
+      },
+      {
+        "id": "6750253e59be935104f8b7b4",
+        "key": "amLowBalanceEnableThreshold",
+        "value": "10"
+      },
+      {
+        "id": "6750253e59be935104f8b7b3",
+        "key": "amIsLowBalanceEnabledVersion",
+        "value": "20.0.0"
+      },
+      {
+        "id": "6750253e59be935104f8b7b2",
+        "key": "amSFWalletLandingOpenBlockergoogle",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7b1",
+        "key": "amAddMoneyToWalletPostTxnCstDeeplink",
+        "value": "paytmmp://mini-app?aId=5bdde7c737ee423b98beb769b281df5e&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2V9LCJwYXJhbXMiOiI/ZmVhdHVyZXR5cGU9Y29tbW9uX21pbmkmb3Blbl9zY3JlZW49Y3N0X2Zsb3cifQ==&verticalId=2"
+      },
+      {
+        "id": "6750253e59be935104f8b7b0",
+        "key": "amPromoApiUnknownErrorKey",
+        "value": "Not able to apply promo"
+      },
+      {
+        "id": "6750253e59be935104f8b7af",
+        "key": "amPromoApiCartEmptyKey",
+        "value": "Not able to apply promocode as cart is empty"
+      },
+      {
+        "id": "6750253e59be935104f8b7ae",
+        "key": "am_vertical_name",
+        "value": "wallet"
+      },
+      {
+        "id": "6750253e59be935104f8b7ad",
+        "key": "addmoney_banner_sf_id",
+        "value": "8576"
+      },
+      {
+        "id": "6750253e59be935104f8b7ac",
+        "key": "securegw_check_user_balance_service",
+        "value": "https://securegw.paytm.in/service/checkUserBalance"
+      },
+      {
+        "id": "6750253e59be935104f8b7ab",
+        "key": "PROMOCODE_SEARCH_PRODUCT_V2",
+        "value": "https://gateway.paytm.com/papi/v2/promosearch/product/"
+      },
+      {
+        "id": "6750253e59be935104f8b7aa",
+        "key": "amWalletVpaAllowedKycStates",
+        "value": "[\"PAYTM_PRIME_WALLET\", \"PAYTM_PRIME_RESTRICTED\", \"PAYTM_ADHAAR_OTP_KYC\"]"
+      },
+      {
+        "id": "6750253e59be935104f8b7a9",
+        "key": "bankIsWaitForAccurateLoc",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7a8",
+        "key": "setPasscodeValuesAndroid",
+        "value": "featuretype=without_pass&open_screen=oauth_sdk&oauth_flow=set_passcode&callback_required=true"
+      },
+      {
+        "id": "6750253e59be935104f8b7a7",
+        "key": "showAccountOpeningFromPassbook_Android",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7a6",
+        "key": "isBankDevicebindingEnabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7a5",
+        "key": "showAccountOpeningFromWallet_Android",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7a4",
+        "key": "isBankOpenWifiCheckEnable",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7a3",
+        "key": "isdevicebindingUpiflowOnLoginAndroid",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7a2",
+        "key": "AutoReadOtpEnable",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b7a1",
+        "key": "remittancesInBankEnabled",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b7a0",
+        "key": "manageSavedCardTokenAndroid",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b79f",
+        "key": "icaAppUpdatePopupAndroid",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b79e",
+        "key": "pbPasscodeRSAKeyAndroid",
+        "value": "{\"publicKey\": \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzbYiAqfK4igtcw+w0Rdvvye0KXC7kWqMoDhiiApirUqihcHeiY++jLB+t5MqehYv+TrWkVZEKeske8rO0IqaIW7ilZRIf7tRlFmLSf9cByrfbmjZURAB0geOYkh3uHkwwub+x3MWiujNP+LLI01qp13VBH5gnC1ytPvNQbAPrcK8f3h5JdReV8SDtxxs8Ru6Llz1NJPwcedYWHtL0npoTfcvMHKW1XO5u743r+jZA8JHtztWevCVWTIE6FuASpD0d0WB20bZq3j8Xkgi5UsoYFBoqZHx5jd+M+W+TFHgWF5F8LvO4IjAowUVbzTGgZ0yT/BzHmp8jwIdNK+4fzA2OwIDAQAB\", \"version\": \"V2\"}"
+      },
+      {
+        "id": "6750253e59be935104f8b79d",
+        "key": "pwtc_ordering_enabled",
+        "value": "selected"
+      },
+      {
+        "id": "6750253e59be935104f8b79c",
+        "key": "BankHomeAlertMessage",
+        "value": "[{\"msg\":\"Dear Customer, our banking systems will undergo scheduled maintenance. Services will be intermittently unavailable from 18th Aug 2021 11:30 PM to 19th Aug 2021 06:00 AM. We sincerely regret any inconvenience caused.\",\"startDate\":\"08/16/2021 23:30\",\"endDate\":\"08/19/2021 06:00\"}]"
+      },
+      {
+        "id": "6750253e59be935104f8b79b",
+        "key": "EnableChequebookAndroid",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b79a",
+        "key": "pbH5PersonalisedNotification",
+        "value": "[{\"eventName\":\"lohri\",\"date\":\"2021-1-15\",\"text\":\"Happy Lohri {{name}}\",\"subText\":\"Cheers and have a great day!\"}]"
+      },
+      {
+        "id": "6750253e59be935104f8b799",
+        "key": "is_bank_scope_token_enabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b798",
+        "key": "pbH5openHomeFlow",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b797",
+        "key": "pbH5openSavingsFlow",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b796",
+        "key": "oauthClientSecret",
+        "value": "d2a94e4b-840d-41e3-bb14-37e826ae7ad1"
+      },
+      {
+        "id": "6750253e59be935104f8b795",
+        "key": "oauthClientID",
+        "value": "bank-oauth-androidapp-default-prod"
+      },
+      {
+        "id": "6750253e59be935104f8b794",
+        "key": "isToUseDeferedFlowForAddMoney",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b793",
+        "key": "pb_rsa_key",
+        "value": "63uxcxggq6kqjjsgwagub2k877w562v0qnqgkzrki7203cjfr2fwnwuofewsnq5wjv4603cnhwz8dj14mujzmirehg6ysfjuyoua6qjlvnivcxhjk5xes68umpp4mmprs369wb7i4ifp212hvl"
+      },
+      {
+        "id": "6750253e59be935104f8b792",
+        "key": "p2bpopuptext",
+        "value": "Money available in your wallet can be used wherever Paytm is accepted including all shops, shopping Apps, Uber, Food delivery apps & for sending money to others.\\n\\nWe pay high fees when you add money to wallet, hence we levy a charge of 5% when you take this money to your bank account. We recommend you send money to anyone’s Bank account directly from your Bank account at 0% charge from our Bank Transfer section."
+      },
+      {
+        "id": "6750253e59be935104f8b791",
+        "key": "P2BBlockedStates",
+        "value": "PAYTM_MIN_KYC_LOCKED,PAYTM_MIN_KYC,PAYTM_PRIMITIVE,PAYTM_BASIC_WALLET,PAYTM_MIN_KYC_EXPIRED,PAYTM_ADHAAR_OTP_KYC_EXPIRED"
+      },
+      {
+        "id": "6750253e59be935104f8b790",
+        "key": "p2b_cc_product_id",
+        "value": "237692431"
+      },
+      {
+        "id": "6750253e59be935104f8b78f",
+        "key": "cartCheckout",
+        "value": "https://cart.paytm.com/v1/expresscart/checkout"
+      },
+      {
+        "id": "6750253e59be935104f8b78e",
+        "key": "p2bStatus",
+        "value": "https://trust.paytmbank.com/wallet-web/services/txnValidation"
+      },
+      {
+        "id": "6750253e59be935104f8b78d",
+        "key": "transferToBank",
+        "value": "https://trust.paytmbank.com/wallet-web/transferToBank"
+      },
+      {
+        "id": "6750253e59be935104f8b78c",
+        "key": "getBank",
+        "value": "https://trust.paytmbank.com/wallet-web/wrapper/getBank"
+      },
+      {
+        "id": "6750253e59be935104f8b78b",
+        "key": "BeneficiaryList",
+        "value": "https://trust.paytmbank.com/service/getBeneficiaryList"
+      },
+      {
+        "id": "6750253e59be935104f8b78a",
+        "key": "getBeneficiaryKYC",
+        "value": "https://coms.paytmbank.com/coms/ext/beneficiary/v1/getbeneficiary?type=otherBank"
+      },
+      {
+        "id": "6750253e59be935104f8b789",
+        "key": "addBeneficiaryKYC",
+        "value": "https://coms.paytmbank.com/coms/ext/beneficiary/v1/addbeneficiary"
+      },
+      {
+        "id": "6750253e59be935104f8b788",
+        "key": "editBeneficiaryKYC",
+        "value": "https://coms.paytmbank.com/coms/ext/beneficiary/v1/editbeneficiary"
+      },
+      {
+        "id": "6750253e59be935104f8b787",
+        "key": "searchUserTransactionHistoryUrl",
+        "value": "https://trust.paytmbank.com/service/wrapper/searchUserTransactionHistory"
+      },
+      {
+        "id": "6750253e59be935104f8b786",
+        "key": "validateBeneficiaryKYC",
+        "value": "https://coms.paytmbank.com/coms/ext/beneficiary/v1/validatebeneficiary"
+      },
+      {
+        "id": "6750253e59be935104f8b785",
+        "key": "ppb_unblock_card",
+        "value": "https://product.paytmbank.com/product/ext/v1/cards/{cardNumberAlias}/unblock"
+      },
+      {
+        "id": "6750253e59be935104f8b784",
+        "key": "passcodeSetURL",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v2/set-passcode"
+      },
+      {
+        "id": "6750253e59be935104f8b783",
+        "key": "isBankAndroidKeyBoardCheckEnabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b77f",
+        "key": "is_bank_scopetoken_enabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b77e",
+        "key": "bank_scope_token_url",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v1/client/token"
+      },
+      {
+        "id": "6750253e59be935104f8b77d",
+        "key": "pb_passcode_rsa_key",
+        "value": "63uxcxggq6kqjjsgwagub2k877w562v0qnqgkzrja5vo7cf0xgr0yt4fkw68iv2r4hz1fje5tk8gb4yznlkzcaueor2mpho1xgjicx0z2by2xbw15o7wmuj55puqnje88zx91zh943c4l7ry0x"
+      },
+      {
+        "id": "6750253e59be935104f8b77c",
+        "key": "pb_atm_rsa_key",
+        "value": "yefw0sj1v66akh3ejbced5owf77dyi1990wij1y8xsnt2oweowy6g52o8kw3kmanhr5y2et7o30iyt9jj531bebqn52te78m63uaek32i4bu9rkg01t4ob5eemlkrj7pph1obor67a9uxsm3dcvrv78llkurdvj67cpugi3ngggymf4pe62kxowfjks1s7ho7y5zdy2uvti1wijhp4opzcq30dtcsnpytqw037j1lxluf02dkbkwkqtiohvdgaepbfj8dh0vic8z210emkvxc34aiw3e5nvo4gfdo5qag7o3y7kvzh0astmsxm30d2v65aqhqdbjmdjppibvb0z9n3wgoi2lxw6hxbh37kc0079obkk5dm67nsy488wm2l996uwchnco4s8w736j0j8fvqc0kwnx2epkllm42a5v8cezt5x4rzofu2j2q413g99ld4dijgh"
+      },
+      {
+        "id": "6750253e59be935104f8b77b",
+        "key": "upi_bank_logo_url",
+        "value": "https://pwebassets.paytm.com/ocl-upi/upi/images/bank-logo"
+      },
+      {
+        "id": "6750253e59be935104f8b77a",
+        "key": "base_url_wallet",
+        "value": "trust.paytmbank.com"
+      },
+      {
+        "id": "6750253e59be935104f8b779",
+        "key": "base_url_auth",
+        "value": "accounts.paytm.com"
+      },
+      {
+        "id": "6750253e59be935104f8b778",
+        "key": "base_url_golden_gate",
+        "value": "goldengate.paytm.com"
+      },
+      {
+        "id": "6750253e59be935104f8b777",
+        "key": "base_url_kyc",
+        "value": "kyc.paytmbank.com"
+      },
+      {
+        "id": "6750253e59be935104f8b776",
+        "key": "leadAPIOnAppLaunch",
+        "value": "https://cart.paytm.com/v1/lead/launch"
+      },
+      {
+        "id": "6750253e59be935104f8b774",
+        "key": "pbH5PrepaidCardUrl",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/card/common"
+      },
+      {
+        "id": "6750253e59be935104f8b773",
+        "key": "bankEnableTemperingCheck",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b76e",
+        "key": "bankEnableRootedCheckV2",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b76c",
+        "key": "pbH5HomeUrl",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/home"
+      },
+      {
+        "id": "6750253e59be935104f8b76b",
+        "key": "pbH5ForgotPasscodeUrl",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/forgot-passcode"
+      },
+      {
+        "id": "6750253e59be935104f8b76a",
+        "key": "fdH5Url",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/fd"
+      },
+      {
+        "id": "6750253e59be935104f8b769",
+        "key": "pbDebitCardUrl",
+        "value": "https://bankapp-home.paytmbank.com/ppbl/debitcard"
+      },
+      {
+        "id": "6750253e59be935104f8b768",
+        "key": "pbopenH5ForgotPasscodeflowAndroid",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b767",
+        "key": "showBiometricLogin",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b766",
+        "key": "isdevicebindingflowOnLoginAndroid",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b764",
+        "key": "fetchBankStatus",
+        "value": "https://veneer.paytmbank.com/middleware-veneer/ext/v1/login/prerequisite"
+      },
+      {
+        "id": "6750253e59be935104f8b762",
+        "key": "amIsManualPromoEnabledVersion",
+        "value": "10.31.0"
+      },
+      {
+        "id": "6750253e59be935104f8b761",
+        "key": "amSubscriptionWrongAmountCrashLogEnabled",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b760",
+        "key": "internationUserConfig_android",
+        "value": "{\"is_transfer_to_bank_disabled\":true,\"is_gift_voucher_disabled\":true,\"is_automatic_add_money_disabled\":true,\"is_automatic_bottom_sheet_disabled\":true,\"is_am_gift_voucher_disabled\":true,\"is_transit_card_disabled\":true}"
+      },
+      {
+        "id": "6750253e59be935104f8b75f",
+        "key": "addMoneyIsPgTextFromBe",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b75e",
+        "key": "amSubscriptionNewTagEnabled",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b75d",
+        "key": "amSubscriptionMaxThresholAmount",
+        "value": "10000"
+      },
+      {
+        "id": "6750253e59be935104f8b75c",
+        "key": "amSubscriptionMinThresholdAmount",
+        "value": "100"
+      },
+      {
+        "id": "6750253e59be935104f8b75b",
+        "key": "amSubscriptionMaximumAmount",
+        "value": "100001"
+      },
+      {
+        "id": "6750253e59be935104f8b75a",
+        "key": "amSubscriptionMinimumAmount",
+        "value": "100001"
+      },
+      {
+        "id": "6750253e59be935104f8b759",
+        "key": "amSubscriptionThresholdAmount",
+        "value": "1000"
+      },
+      {
+        "id": "6750253e59be935104f8b758",
+        "key": "amSubscriptionVisibleOnLanding",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b757",
+        "key": "amSubscriptionEnabledOnLanding",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b756",
+        "key": "am_automatic_add_money_timer",
+        "value": "-1"
+      },
+      {
+        "id": "6750253e59be935104f8b755",
+        "key": "am_automatic_add_money_deeplink",
+        "value": "paytmmp://cash_wallet?featuretype=add_money&tab=automatic_add_money"
+      },
+      {
+        "id": "6750253e59be935104f8b754",
+        "key": "addMoneyHomePageTopActionTexts",
+        "value": "[{\"title\":\"Help\",\"titleKey\":\"am_wallet_help\",\"deeplink\":\"paytmmp://mini-app?aId=5bdde7c737ee423b98beb769b281df5e&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2V9LCJwYXJhbXMiOiI/ZmVhdHVyZXR5cGU9Y29tbW9uX21pbmkmb3Blbl9zY3JlZW49Y3N0X2Zsb3cifQ==&verticalId=2\"},{\"title\":\"Settings\",\"titleKey\":\"am_wallet_settings\",\"deeplink\":\"paytmmp://mini-app?aId=6195710ba5cb4f33827ababc67f1de5c&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2V9LCJwYXJhbXMiOiI/ZmVhdHVyZXR5cGU9Y29tbW9uX21pbmkmb3Blbl9zY3JlZW49c2V0dGluZ3MifQ==\"}]"
+      },
+      {
+        "id": "6750253e59be935104f8b753",
+        "key": "addMoneyCreditCardConvFeePercent",
+        "value": "2.65"
+      },
+      {
+        "id": "6750253e59be935104f8b752",
+        "key": "addMoneyCartCheckoutV3",
+        "value": "https://trust.paytmbank.com/wallet-fulfillment/v3/order/checkout"
+      },
+      {
+        "id": "6750253e59be935104f8b751",
+        "key": "addMoneyCartVerifyV2",
+        "value": "https://ffwallet.paytm.com/v2/order/verify"
+      },
+      {
+        "id": "6750253e59be935104f8b750",
+        "key": "am_wallet_inactive_data",
+        "value": "{\"tag_key\":\"am_tag_inactive_wallet\",\"tag_text\":\"Inactive\",\"tag_bg\":\"#FF9D00\",\"header_key\":\"am_header_inactive_wallet\",\"header_text\":\"Activate your wallet\",\"body_key\":\"am_body_inactive_wallet\",\"body_text\":\"There has been no transaction in your wallet in last 12 months and hence your wallet is marked as inactive(as per RBI guidelines)\",\"cta_key\":\"am_cta_inactive_wallet\",\"cta_text\":\"Activate Wallet\",\"cta_deeplink\":\"paytmmp://mini-app?aId=6195710ba5cb4f33827ababc67f1de5c&data=eyJzcGFyYW1zIjp7InNob3dUaXRsZUJhciI6ZmFsc2UsInBob2VuaXhQb3B1cCI6dHJ1ZSwiY2FuUHVsbERvd24iOmZhbHNlfSwicGFyYW1zIjoiP2ZlYXR1cmV0eXBlPXRyYW5zcGFyZW50Qmcmb3Blbl9zY3JlZW49cmVhY3RpdmF0aW9uIn0=&pulse_source=wallethome\"}"
+      },
+      {
+        "id": "6750253e59be935104f8b74f",
+        "key": "addMoneySubscriptionBottomSheetOfferText",
+        "value": "null"
+      },
+      {
+        "id": "6750253e59be935104f8b74e",
+        "key": "addMoneyWalletSubscriptionSuggestiveAmountList",
+        "value": "[{\"displayValue\":\"₹ 500\",\"value\":\"500\"},{\"displayValue\":\"₹ 1,000\",\"value\":\"1000\"},{\"displayValue\":\"₹ 1,500\",\"value\":\"1500\"}]"
+      },
+      {
+        "id": "6750253e59be935104f8b74d",
+        "key": "addmoney_banner_page_id",
+        "value": "52419"
+      },
+      {
+        "id": "6750253e59be935104f8b74c",
+        "key": "bank_addmoney_home_url",
+        "value": "https://storefront.paytm.com/v2/h/add-money-post-txn-page"
+      },
+      {
+        "id": "6750253e59be935104f8b74b",
+        "key": "addmoney_home_url",
+        "value": "https://storefront.paytm.com/v2/h/add-money-post-txn-page"
+      },
+      {
+        "id": "6750253e59be935104f8b74a",
+        "key": "gv_home_url",
+        "value": "https://storefront.paytm.com/v2/h/gv-post-txn-screen"
+      },
+      {
+        "id": "6750253e59be935104f8b749",
+        "key": "getW2BTxnValidation",
+        "value": "https://trust.paytmbank.com/wallet-web/services/v2/txnValidation"
+      },
+      {
+        "id": "6750253e59be935104f8b748",
+        "key": "knowMoreTwoDifferentChargeLink",
+        "value": "https://www.paytmbank.com/blog/"
+      },
+      {
+        "id": "6750253e59be935104f8b747",
+        "key": "showTwoDifferentCharges",
+        "value": "false"
+      },
+      {
+        "id": "6750253e59be935104f8b746",
+        "key": "addMoney_polling_gap_in_seconds",
+        "value": "2"
+      },
+      {
+        "id": "6750253e59be935104f8b745",
+        "key": "no_kyc_user_allowed",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b744",
+        "key": "wallet_balance_list",
+        "value": "MAIN,GIFT_VOUCHER"
+      },
+      {
+        "id": "6750253e59be935104f8b743",
+        "key": "add_money_to_wallet_cc_fee_link",
+        "value": "https://www.paytmbank.com/ratesCharges"
+      },
+      {
+        "id": "6750253e59be935104f8b742",
+        "key": "charges_without_percent",
+        "value": "Charges"
+      },
+      {
+        "id": "6750253e59be935104f8b741",
+        "key": "charges_",
+        "value": "Charges (%s)"
+      },
+      {
+        "id": "6750253e59be935104f8b740",
+        "key": "acceptTncActivateWalletUrl",
+        "value": "https://kyc.paytmbank.com/kyc/tnc/user"
+      },
+      {
+        "id": "6750253e59be935104f8b73f",
+        "key": "fetchTncActivateWalletUrl",
+        "value": "https://kyc.paytmbank.com/kyc/tnc/v2/set/appwalletconsent"
+      },
+      {
+        "id": "6750253e59be935104f8b73e",
+        "key": "createWalletUrl",
+        "value": "https://kyc.paytmbank.com/savingaccount/createwallet"
+      },
+      {
+        "id": "6750253e59be935104f8b73d",
+        "key": "gvSelectAmountList",
+        "value": "100,500,1000"
+      },
+      {
+        "id": "6750253e59be935104f8b73c",
+        "key": "shouldUseUniversalAddMoneyNative7.4",
+        "value": "true"
+      },
+      {
+        "id": "6750253e59be935104f8b73b",
+        "key": "ppb_get_fin_product",
+        "value": "https://product.paytmbank.com/product/ext/v1/fin-products"
+      },
+      {
+        "id": "6750253e59be935104f8b73a",
+        "key": "fetch_payment_bank_balance_new_URL",
+        "value": "https://secure.paytmbank.com/transaction/ext/v1/user-balance?account_type=isa"
+      },
+      {
+        "id": "6750253e59be935104f8b739",
+        "key": "add_money_ppb_product_id",
+        "value": "173623496"
+      },
+      {
+        "id": "6750253e59be935104f8b738",
+        "key": "create_subscription_url_v2",
+        "value": "https://trust.paytmbank.com/wallet-web/subscription/v2/create"
+      },
+      {
+        "id": "6750253e59be935104f8b737",
+        "key": "max_digit_paytmcash",
+        "value": "5"
+      },
+      {
+        "id": "6750253e59be935104f8b735",
+        "key": "gvpopupknowmore",
+        "value": "One Gift Voucher can hold up to ₹1,000."
+      },
+      {
+        "id": "6750253e59be935104f8b734",
+        "key": "maxAmountPaytmcash",
+        "value": "99999"
+      },
+      {
+        "id": "6750253e59be935104f8b733",
+        "key": "wallet_nearby_add_cash_points_clicked",
+        "value": "wallet_nearby_add_cash_points_clicked"
+      },
+      {
+        "id": "6750253e59be935104f8b732",
+        "key": "nearbyBankingPoint",
+        "value": "https://kyc.paytmbank.com/v1/nearby/points?filters=iskycpoint,iscashinpoint,iscashoutpoint,isbo"
+      },
+      {
+        "id": "6750253e59be935104f8b731",
+        "key": "nearByAddMoneyPoint",
+        "value": "https://kyc.paytmbank.com/v1/nearby/points?filters=isaddmoney"
+      },
+      {
+        "id": "6750253e59be935104f8b730",
+        "key": "subscription_status",
+        "value": "https://trust.paytmbank.com/wallet-web/subscription/v2/status"
+      },
+      {
+        "id": "6750253e59be935104f8b72f",
+        "key": "PROMOCODE_SEARCH_PRODUCT",
+        "value": "https://gateway.paytm.com/papi/v1/promosearch/product/"
+      },
+      {
+        "id": "6750253e59be935104f8b72e",
+        "key": "fetch_subscription_url",
+        "value": "https://trust.paytmbank.com/service/fetchSubscriptionDetail"
+      },
+      {
+        "id": "6750253e59be935104f8b72d",
+        "key": "gvtitletextnew",
+        "value": "Gift Voucher"
+      },
+      {
+        "id": "6750253e59be935104f8b72c",
+        "key": "wallet_merchant_id",
+        "value": "scwpay09224240900570"
+      },
+      {
+        "id": "6750253e59be935104f8b72b",
+        "key": "PaytmCashProductId",
+        "value": "19999"
+      },
+      {
+        "id": "6750253e59be935104f8b72a",
+        "key": "bankProductIdAddMoney",
+        "value": "89987756"
+      },
+      {
+        "id": "6750253e59be935104f8b729",
+        "key": "addMoneyCartVerify",
+        "value": "https://ffwallet.paytm.com/v1/order/verify"
+      },
+      {
+        "id": "6750253e59be935104f8b728",
+        "key": "cartVerify",
+        "value": "https://cart.paytm.com/v1/expresscart/verify"
+      },
+      {
+        "id": "6750253e59be935104f8b727",
+        "key": "fetch_offline_instrument_v2New",
+        "value": "https://securegw-online.paytm.in/theia/v2/fetchPaymentInstruments"
+      },
+      {
+        "id": "6750253e59be935104f8b726",
+        "key": "remove_subscription",
+        "value": "https://trust.paytmbank.com/wallet-web/subscription/remove"
+      },
+      {
+        "id": "6750253e59be935104f8b725",
+        "key": "gvmaxvalue",
+        "value": "0"
+      },
+      {
+        "id": "6750253e59be935104f8b724",
+        "key": "gvminvalue",
+        "value": "1"
+      },
+      {
+        "id": "6750253e59be935104f8b723",
+        "key": "AddMoneyWalletBlockedStates",
+        "value": "PAYTM_MIN_KYC_LOCKED,PAYTM_BASIC_WALLET,PAYTM_PRIMITIVE"
+      },
+      {
+        "id": "6750253e59be935104f8b722",
+        "key": "paymentCombinations",
+        "value": "https://upi-proxy.paytm.com/combproxy/v1/ext/users/{userID}/payment-combinations"
+      },
+      {
+        "id": "6750253e59be935104f8b721",
+        "key": "addMoneyCartVerifyV3",
+        "value": "https://trust.paytmbank.com/wallet-fulfillment/v3/order/verify"
+      },
+      {
+        "id": "6750253e59be935104f8b720",
+        "key": "addMoneyCartCheckoutV2",
+        "value": "https://ffwallet.paytm.com/v2/order/checkout"
+      },
+      {
+        "id": "6750253e59be935104f8b71f",
+        "key": "check_user_balance_service",
+        "value": "https://trust.paytmbank.com/service/checkUserBalance"
+      },
+      {
+        "id": "6750253e59be935104f8b71e",
+        "key": "orderdetail",
+        "value": "https://cart.paytm.com/v1/myOrders/"
+      },
+      {
+        "id": "6750253e59be935104f8b71d",
+        "key": "PaytmGiftVoucherProductId",
+        "value": "154435058"
+      },
+      {
+        "id": "6750253e59be935104f8b71c",
+        "key": "addMoneyCartCheckout",
+        "value": "https://ffwallet.paytm.com/v1/order/checkout"
+      },
+      {
+        "id": "6750253e59be935104f8b71b",
+        "key": "walletLimitV2",
+        "value": "https://trust.paytmbank.com/wallet-web/v2/walletLimits"
+      },
+      {
+        "id": "6750253e59be935104f8b71a",
+        "key": "gtmKeyMaxSMSFailureAllowed",
+        "value": "1"
+      },
+      {
+        "id": "6750253e59be935104f8b717",
+        "key": "gtmDefaultDeBPollingDelay",
+        "value": "3"
+      },
+      {
+        "id": "6750253e59be935104f8b716",
+        "key": "oauthCountryList",
+        "value": "[{\"country\":\"Australia\",\"isd_code\":\"61\",\"iso_code\":\"AU\",\"pattern\":\"3-3-3\",\"regex\":\"^[45]\\\\d{8}$\",\"delimiters\":\"2-2\"},{\"country\":\"Canada\",\"isd_code\":\"1\",\"iso_code\":\"CA\",\"pattern\":\"3-3-4\",\"regex\":\"^[0-9]\\\\d{9}$\",\"delimiters\":\"1-2\"},{\"country\":\"Hong Kong\",\"isd_code\":\"852\",\"iso_code\":\"HK\",\"pattern\":\"4-4-0\",\"regex\":\"^[4-9]\\\\d{7}$\",\"delimiters\":\"2-0\"},{\"country\":\"India\",\"isd_code\":\"91\",\"iso_code\":\"IN\",\"pattern\":\"5-5-0\",\"regex\":\"^[6789]\\\\d{9}$\",\"delimiters\":\"2-0\"},{\"country\":\"Oman\",\"isd_code\":\"968\",\"iso_code\":\"OM\",\"pattern\":\"4-4-0\",\"regex\":\"^[79]\\\\d{7}$\",\"delimiters\":\"2-0\"},{\"country\":\"Qatar\",\"isd_code\":\"974\",\"iso_code\":\"QA\",\"pattern\":\"8-0-0\",\"regex\":\"^[3567]\\\\d{7}$\",\"delimiters\":\"0-0\"},{\"country\":\"Saudi Arabia\",\"isd_code\":\"966\",\"iso_code\":\"SA\",\"pattern\":\"2-7-0\",\"regex\":\"^[0-9]\\\\d{8}$\",\"delimiters\":\"2-0\"},{\"country\":\"Singapore\",\"isd_code\":\"65\",\"iso_code\":\"SG\",\"pattern\":\"4-4-0\",\"regex\":\"^[1-9]\\\\d{7}$\",\"delimiters\":\"2-0\"},{\"country\":\"United Arab Emirates\",\"isd_code\":\"971\",\"iso_code\":\"AE\",\"pattern\":\"2-3-4\",\"regex\":\"^[0-9]\\\\d{8}$\",\"delimiters\":\"2-2\"},{\"country\":\"United Kingdom\",\"isd_code\":\"44\",\"iso_code\":\"GB\",\"pattern\":\"4-6-0\",\"regex\":\"^(7)\\\\d{9}$\",\"delimiters\":\"2-0\"},{\"country\":\"United States of America\",\"isd_code\":\"1\",\"iso_code\":\"US\",\"pattern\":\"3-3-4\",\"regex\":\"^[0-9]\\\\d{9}$\",\"delimiters\":\"1-3\"}]"
+      },
+      {
+        "id": "6750253e59be935104f8b715",
+        "key": "operator_icons_mapping",
+        "value": "{ \"upi_telco_icons\":{ \"airtel\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom+Logo/Telecom+Logo/Android/xxhdpi/Airtel.png\", \"vodafone\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom+Logo/Telecom+Logo/Android/xxhdpi/Vodafone.png\", \"jio\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom+Logo/Telecom+Logo/Android/xxhdpi/Jio.png\", \"mtnl\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom/Telecom/Android/xxhdpi/MTNL.png\", \"idea\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom+Logo/Telecom+Logo/Android/xxhdpi/Idea.png\", \"bsnl\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom+Logo/Telecom+Logo/Android/xxhdpi/BSNL.png\", \"rcom\":\"https://assetscdn1.paytm.com/promotion/Prabhu+Sharma/Telecom/Telecom/Android/xxhdpi/RComm.png\" } }"
+      },
+      {
+        "id": "6750253e59be935104f8b714",
+        "key": "oauthFetchUserDetailsUrl",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v2/user"
+      },
+      {
+        "id": "6750253e59be935104f8b713",
+        "key": "oauthDeviceBindingStatusUrl",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v1/workflow/execute"
+      },
+      {
+        "id": "6750253e59be935104f8b712",
+        "key": "oauthInitiateV2ClientTokenUrl",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v2/client/token"
+      },
+      {
+        "id": "6750253e59be935104f8b711",
+        "key": "oauthInitiateWorkflowUrl",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v1/workflow/initiate"
+      },
+      {
+        "id": "6750253e59be935104f8b710",
+        "key": "oauthInitiateDebUrl",
+        "value": "https://oauth.paytmbank.com/bank-oauth/ext/v1/workflow/initiate"
+      },
+      {
+        "id": "6750253e59be935104f8b70f",
+        "key": "oauthLoginTCUrl",
+        "value": "https://www.paytmbank.com/Terms%26Conditions"
+      },
+      {
+        "id": "6750253e59be935104f8b70e",
+        "key": "privacyPolicyUrl",
+        "value": "https://www.paytmbank.com/PrivacyPolicy"
+      }
+    ],
+    "total": 306
+  }
+}
