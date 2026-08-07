@@ -158,9 +158,15 @@ class MapView(QWidget):
         else:
             note_txt = ("OFFLINE fallback view — QtWebEngine unavailable, so no basemap tiles "
                         "and no interaction. Points are plotted on a plain coordinate grid.")
-        if self._distinct > 1 and len(self.fixes) > self._distinct:
-            note_txt += (f"  NOTE: {len(self.fixes)} fixes resolve to only {self._distinct} "
-                         f"distinct positions — most are repeated telemetry coordinates, "
+        # Only call it out when repeats actually dominate; saying "most are repeats" for a
+        # 38->27 ratio would overstate it, and this caption exists to prevent overstatement.
+        repeats = len(self.fixes) - self._distinct
+        if self._distinct and repeats:
+            share = repeats / len(self.fixes)
+            strength = ("Most" if share >= 0.5 else "Some")
+            note_txt += (f"  NOTE: {len(self.fixes)} fixes resolve to {self._distinct} "
+                         f"distinct positions. {strength} are repeated coordinates "
+                         f"(telemetry often stamps one cached fix on many events), "
                          f"not separate movements.")
         note = QLabel(note_txt)
         note.setObjectName("kvKey"); note.setStyleSheet(f"color:{C['text_dim']};"); note.setWordWrap(True)

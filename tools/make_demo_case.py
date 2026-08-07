@@ -179,16 +179,42 @@ def build_extraction(root: str) -> None:
                     (f"ocl.permission.{key}", "true", 1, "-1", T0 + 3 * MS_DAY))
     con.commit(); con.close()
 
+    # A plausible movement history: a daily Bengaluru pattern (home / office / mall),
+    # a domestic trip to Hyderabad, and one to Mumbai. Invented places, real-world
+    # geography, so the map view shows something an examiner would recognise instead of
+    # a synthetic straight line.
+    PLACES = [
+        ("home",      12.9352, 77.6245),   # Koramangala, Bengaluru
+        ("office",    12.9698, 77.7500),   # Whitefield, Bengaluru
+        ("mall",      12.9784, 77.6408),   # MG Road, Bengaluru
+        ("cafe",      12.9279, 77.6271),   # BTM Layout, Bengaluru
+        ("airport",   13.1986, 77.7066),   # Kempegowda International
+        ("hyderabad", 17.4435, 78.3772),   # HITEC City
+        ("mumbai",    19.0760, 72.8777),   # Mumbai
+    ]
+    #: (place, day-offset) — commute pattern, then two trips
+    TRACK = ([("home", d) for d in range(10, 40, 6)]
+             + [("office", d) for d in range(11, 41, 6)]
+             + [("cafe", 14), ("mall", 20), ("mall", 33)]
+             + [("airport", 45), ("hyderabad", 46), ("hyderabad", 47), ("airport", 48)]
+             + [("airport", 70), ("mumbai", 71), ("mumbai", 72), ("airport", 74)]
+             + [("home", d) for d in (50, 55, 60, 78, 85)])
+
     con = _db(os.path.join(dbd, "bank_signal"))
     con.execute("CREATE TABLE SignalEventDb(id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 " priority INTEGER, deviceDateTime INTEGER, signalEvent TEXT)")
-    for i in range(14):                    # a plausible commute, not one repeated point
-        lat, lon = 12.9716 + i * 0.004, 77.5946 + i * 0.003
+    coords = {n: (la, lo) for n, la, lo in PLACES}
+    for name, day in sorted(TRACK, key=lambda x: x[1]):
+        la, lo = coords[name]
+        # a few metres of GPS jitter, as a real fix would have
+        la += rnd.uniform(-0.0008, 0.0008)
+        lo += rnd.uniform(-0.0008, 0.0008)
         con.execute("INSERT INTO SignalEventDb(priority,deviceDateTime,signalEvent) VALUES(0,?,?)",
-                    (T0 + (10 + i) * MS_DAY,
+                    (T0 + day * MS_DAY + rnd.randint(0, 20) * 3_600_000,
                      json.dumps({"eventType": "location_event",
-                                 "payload": json.dumps({"latitude": lat, "longitude": lon,
-                                                        "speed": round(rnd.uniform(0, 12), 1)})})))
+                                 "payload": json.dumps({"latitude": round(la, 6),
+                                                        "longitude": round(lo, 6),
+                                                        "speed": round(rnd.uniform(0, 14), 1)})})))
     con.commit(); con.close()
 
     con = _db(os.path.join(dbd, "cache_database"))
@@ -238,8 +264,9 @@ def build_extraction(root: str) -> None:
                      json.dumps({"appVersion": "10.0.0", "customMessage": "demo diagnostic",
                                  "flowName": "passbook", "screenName": "PassbookActivity",
                                  "batteryPercentage": 50 + i,
-                                 "location": {"lat": 12.9716 + i * 0.004,
-                                              "lon": 77.5946 + i * 0.003}}),
+                                 # telemetry stamps one CACHED coordinate on every event —
+                                 # exactly the pattern the distinct-position count exposes
+                                 "location": {"lat": 12.9352, "lon": 77.6245}}),
                      T0 + (12 + i) * MS_DAY))
     con.commit(); con.close()
 
