@@ -136,8 +136,8 @@ counts and totals.
 Python 3.10+.
 
 ```bash
-git clone https://github.com/<your-org>/paytmforensics
-cd paytmforensics
+git clone https://github.com/Mihir-Choudhary/Paytm-Forensics
+cd Paytm-Forensics
 python -m pip install -r requirements.txt
 ```
 
